@@ -51,7 +51,6 @@ describe('Create a Datagrid with pagination', () => {
         expect(dg.innerHTML).to.include('2022-01-06')
     })
 
-    
     it('and travel through pages via goto', () => {
         let dg = Datagrid(root, {
             data: [
@@ -135,7 +134,6 @@ describe('Create a Datagrid with pagination', () => {
         expect(dg.innerHTML).not.to.include('2022-01-06')
         expect(dg.innerHTML).to.include('2022-01-07')
     })
-
     
     it('and dont break search', () => { 
         let dg = Datagrid(root, {
