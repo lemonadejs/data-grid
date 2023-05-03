@@ -39,11 +39,106 @@ describe('Create a Datagrid with search', () => {
         expect(tbody.innerHTML).to.include('2022-02-06')
     })
 
-    xit('and dont break pagination', () => {
+    it('and dont break pagination', () => {
+        let dg = Datagrid(root, {
+            data: [
+                { date: '2022-01-01' },
+                { date: '2022-01-02' },
+                { date: '2022-01-03' },
+                { date: '2022-01-04' },
+                { date: '2022-01-05' },
+                { date: '2022-02-06' },
+                { date: '2022-02-07' },
+            ],
+            columns: [
+                { name: 'date', headerName: 'Date' },
+            ],
+            search: true,
+            pagination: 5,
+        })
 
+
+        dg.lemon.self.input = '01-01'
+        dg.lemon.self.input = '2022'
+
+        const li = dg.children[2].children[0].children
+
+        li[2].click()       
+
+        expect(dg.innerHTML).not.to.include('2022-01-01')
+        expect(dg.innerHTML).to.include('2022-02-06')
+        expect(dg.innerHTML).to.include('2022-02-07')
     })
     
-    xit('and dont break data editing', () => {
+    it('and dont break data editing', () => {
+        let dg = Datagrid(root, {
+            data: [
+                { date: '2022-01-01' },
+                { date: '2022-01-02' },
+                { date: '2022-01-03' },
+                { date: '2022-01-04' },
+                { date: '2022-01-05' },
+                { date: '2022-02-06' },
+                { date: '2022-02-07' },
+            ],
+            columns: [
+                { name: 'date', headerName: 'Date' },
+            ],
+            search: true,
+            pagination: 5,
+        })
 
+
+        dg.lemon.self.input = '01-01'
+        dg.lemon.self.input = '2022'
+
+        const tbody = dg.children[1].children[1]
+        const cell1 = tbody.children[0].children[0]
+
+        cell1.dispatchEvent(new Event('dblclick')) 
+        for (const char of ' 11:00') {
+            cell1.textContent += char
+            cell1.dispatchEvent(new Event('input', {bubbles: true}))
+        }
+        cell1.dispatchEvent(new Event('blur'))
+
+        expect(cell1.innerHTML).to.include('2022-01-01 11:00')
+    })
+    
+    it('and dont break sorting', () => {
+        let dg = Datagrid(root, {
+            data: [
+                { date: '2022-01-01' },
+                { date: '2022-01-02' },
+                { date: '2022-01-03' },
+                { date: '2022-01-04' },
+                { date: '2022-01-05' },
+                { date: '2022-02-06' },
+                { date: '2022-02-07' },
+            ],
+            columns: [
+                { name: 'date', headerName: 'Date' },
+            ],
+            search: true,
+        })
+
+
+        dg.lemon.self.input = '01-01'
+        dg.lemon.self.input = '2022'
+
+        const tbody = dg.children[1].children[1]
+        const headers = dg.children[1].children[0].children[0].children
+
+        headers[0].click()
+
+        expect(tbody.children[0].children[0].innerHTML).to.equal('2022-01-01')
+        expect(tbody.children[1].children[0].innerHTML).to.equal('2022-01-02')
+        expect(tbody.children[6].children[0].innerHTML).to.equal('2022-02-07')
+
+        headers[0].click()
+
+        expect(tbody.children[0].children[0].innerHTML).to.equal('2022-02-07')
+        expect(tbody.children[1].children[0].innerHTML).to.equal('2022-02-06')
+        expect(tbody.children[6].children[0].innerHTML).to.equal('2022-01-01')
     })
 });

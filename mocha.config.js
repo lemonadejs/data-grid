@@ -4,8 +4,6 @@ require('jsdom-global')(undefined, { url: 'https://localhost' });
 const lemonade = require("lemonadejs");
 const Datagrid = require("./src/datagrid.js");
 
-// lemonade.setComponents({ Datagrid });
-
 global.lemonade = lemonade;
 global.Datagrid = Datagrid;
 global.root =  document.createElement('div');
@@ -15,7 +13,7 @@ document.body.appendChild(global.root);
 
 exports.mochaHooks = {
     afterEach(done) {
-        // jspreadsheet.destroy(root);
+        // destroy datagrid component
         done();
     },
 };
