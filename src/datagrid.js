@@ -100,22 +100,18 @@
             self.page = pg
         }
 
-        self.addRow = function (row) {
+        self.insertRow = function (row) {
             self.data.push(row)
             page()
         }
 
-        self.removeRow = function (y, pg) {
-            if (pg) {
-                console.log(self.page)
-                console.log(self.pages)
-            }
+        self.removeRow = function (y) {
             self.data.splice(y, 1)
             page()
         }
 
         self.setData = function (data) {
-            self.result = self.data = data
+            result = self.result = self.data = data
             self.page = 0
             page()
 
