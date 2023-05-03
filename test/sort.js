@@ -46,12 +46,113 @@ describe('Create a Datagrid with search', () => {
         expect(tbody.children[2].children[1].innerHTML).to.equal('8')
     })
 
-    xit('and dont break pagination', () => {
+    it('and dont break pagination', () => {
+        let dg = Datagrid(root, {
+            data: [
+                { name: 'Baudur', grade: 8 },
+                { name: 'Alice', grade: 9.5 },
+                { name: 'Carlos', grade: 6 },
+                { name: 'Danny', grade: 7 },
+                { name: 'Celine', grade: 8 },
+                { name: 'Arthur', grade: 10 },
+            ],
+            columns: [
+                { name: 'name', headerName: 'Name' },
+                { name: 'grade', headerName: 'Grade' },
+            ],
+            search: true,
+            pagination: 3,
+        })
+
+        const tbody = dg.children[1].children[1]
+        const headers = dg.children[1].children[0].children[0].children
+
+        headers[0].click()
+
+        const li = dg.children[2].children[0].children
+        li[3].click()
+
+        expect(dg.innerHTML).to.include('Danny')
+        expect(dg.innerHTML).not.to.include('Alice')
+
+        headers[0].click()
+        li[3].click()
+
+        expect(dg.innerHTML).not.to.include('Danny')
+        expect(dg.innerHTML).to.include('Alice')
     })
 
-    xit('and dont break search', () => {
+    it('and dont break search', () => {
+        let dg = Datagrid(root, {
+            data: [
+                { name: 'Baudur', grade: 8 },
+                { name: 'Alice', grade: 9.5 },
+                { name: 'Carlos', grade: 6 },
+                { name: 'Danny', grade: 7 },
+                { name: 'Celine', grade: 8 },
+                { name: 'Arthur', grade: 10 },
+            ],
+            columns: [
+                { name: 'name', headerName: 'Name' },
+                { name: 'grade', headerName: 'Grade' },
+            ],
+            search: true,
+            pagination: 3,
+        })
+
+        const tbody = dg.children[1].children[1]
+        const headers = dg.children[1].children[0].children[0].children
+
+        headers[0].click()
+
+        dg.lemon.self.input = 'a'
+
+        expect(dg.innerHTML).not.to.include('Celine')
+        expect(dg.innerHTML).to.include('Alice')
+
+        dg.lemon.self.input = 'celine'
+
+        expect(dg.innerHTML).not.to.include('Aline')
+        expect(dg.innerHTML).to.include('Celine')
     })
 
-    xit('and dont break cell edit', () => {
+    it('and dont break cell edit', () => {
+        let dg = Datagrid(root, {
+            data: [
+                { name: 'Baudur', grade: 8 },
+                { name: 'Alice', grade: 9.5 },
+                { name: 'Carlos', grade: 6 },
+                { name: 'Danny', grade: 7 },
+                { name: 'Celine', grade: 8 },
+                { name: 'Arthur', grade: 10 },
+            ],
+            columns: [
+                { name: 'name', headerName: 'Name' },
+                { name: 'grade', headerName: 'Grade' },
+            ],
+            search: true,
+            pagination: 3,
+        })
+
+        const tbody = dg.children[1].children[1]
+        const headers = dg.children[1].children[0].children[0].children
+
+        headers[0].click()
+        headers[0].click()
+
+        let cell1 = tbody.children[0].children[0]
+
+        cell1.dispatchEvent(new Event('dblclick')) 
+        for (const char of ' Cooper') {
+            cell1.textContent += char
+            cell1.dispatchEvent(new Event('input', {bubbles: true}))
+        }
+        cell1.dispatchEvent(new Event('blur'))
+
+        expect(cell1.innerHTML).to.include('Alice Cooper')
+        headers[1].click()
+        expect(tbody.children[0].children[0].innerHTML).to.include('Carlos')
+        headers[1].click()
+        expect(tbody.children[0].children[0].innerHTML).to.include('Arthur')
     })
 });
