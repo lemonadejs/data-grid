@@ -18,21 +18,21 @@ describe('Create a Datagrid with search', () => {
             search: true,
         })
 
-        let tbody = dg.children[1].children[1]
+        let tbody = dg.el.children[1].children[1]
 
-        dg.lemon.self.input = '01-01'
+        dg.input = '01-01'
 
         expect(tbody.innerHTML).to.include('2022-01-01')
         expect(tbody.innerHTML).not.to.include('2022-01-02')
         expect(tbody.innerHTML).not.to.include('2022-01-05')
 
-        dg.lemon.self.input = ''
+        dg.input = ''
 
         expect(tbody.innerHTML).to.include('2022-01-01')
         expect(tbody.innerHTML).to.include('2022-01-02')
         expect(tbody.innerHTML).to.include('2022-01-05')
         
-        dg.lemon.self.input = '2022-02'
+        dg.input = '2022-02'
         
         expect(tbody.innerHTML).not.to.include('2022-01-01')
         expect(tbody.innerHTML).to.include('2022-02-07')
@@ -58,16 +58,16 @@ describe('Create a Datagrid with search', () => {
         })
 
 
-        dg.lemon.self.input = '01-01'
-        dg.lemon.self.input = '2022'
+        dg.input = '01-01'
+        dg.input = '2022'
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
 
         li[2].click()       
 
-        expect(dg.innerHTML).not.to.include('2022-01-01')
-        expect(dg.innerHTML).to.include('2022-02-06')
-        expect(dg.innerHTML).to.include('2022-02-07')
+        expect(dg.el.innerHTML).not.to.include('2022-01-01')
+        expect(dg.el.innerHTML).to.include('2022-02-06')
+        expect(dg.el.innerHTML).to.include('2022-02-07')
     })
     
     it('and dont break data editing', () => {
@@ -89,10 +89,10 @@ describe('Create a Datagrid with search', () => {
         })
 
 
-        dg.lemon.self.input = '01-01'
-        dg.lemon.self.input = '2022'
+        dg.input = '01-01'
+        dg.input = '2022'
 
-        const tbody = dg.children[1].children[1]
+        const tbody = dg.el.children[1].children[1]
         const cell1 = tbody.children[0].children[0]
 
         cell1.dispatchEvent(new Event('dblclick')) 
@@ -123,11 +123,11 @@ describe('Create a Datagrid with search', () => {
         })
 
 
-        dg.lemon.self.input = '01-01'
-        dg.lemon.self.input = '2022'
+        dg.input = '01-01'
+        dg.input = '2022'
 
-        const tbody = dg.children[1].children[1]
-        const headers = dg.children[1].children[0].children[0].children
+        const tbody = dg.el.children[1].children[1]
+        const headers = dg.el.children[1].children[0].children[0].children
 
         headers[0].click()
 

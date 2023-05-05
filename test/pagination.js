@@ -19,36 +19,36 @@ describe('Create a Datagrid with pagination', () => {
         })
         
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
 
         expect(li.length).to.equal(6)
-        expect(dg.innerHTML).to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
 
         li[2].click()
         
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
 
         li[3].click()
 
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).to.include('2022-01-06')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).to.include('2022-01-06')
 
         li[0].click()
 
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
 
         li[li.length - 1].click()
 
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).to.include('2022-01-06')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).to.include('2022-01-06')
     })
 
     it('and travel through pages via goto', () => {
@@ -69,24 +69,24 @@ describe('Create a Datagrid with pagination', () => {
         })
         
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
 
         expect(li.length).to.equal(6)
-        expect(dg.innerHTML).to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
         
-        dg.lemon.self.goto(1)
+        dg.goto(1)
 
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
 
-        dg.lemon.self.goto(2)
+        dg.goto(2)
 
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).to.include('2022-01-06')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).to.include('2022-01-06')
     })
     
     it('and <<, >> buttons dont go out of index', () => {
@@ -107,32 +107,32 @@ describe('Create a Datagrid with pagination', () => {
         })
         
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
 
         expect(li.length).to.equal(6)
-        expect(dg.innerHTML).to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
         
         li[0].click()
 
-        expect(dg.innerHTML).to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
 
-        dg.lemon.self.goto(3)
+        dg.goto(3)
 
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
-        expect(dg.innerHTML).to.include('2022-01-07')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).to.include('2022-01-07')
         
         li[li.length - 1].click()
 
-        expect(dg.innerHTML).not.to.include('2022-01-02')
-        expect(dg.innerHTML).not.to.include('2022-01-03')
-        expect(dg.innerHTML).not.to.include('2022-01-06')
-        expect(dg.innerHTML).to.include('2022-01-07')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-06')
+        expect(dg.el.innerHTML).to.include('2022-01-07')
     })
     
     it('and dont break search', () => { 
@@ -153,16 +153,16 @@ describe('Create a Datagrid with pagination', () => {
         })
         
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
 
         li[3].click()       
         
-        expect(dg.innerHTML).not.to.include('2022-02-03')
+        expect(dg.el.innerHTML).not.to.include('2022-02-03')
 
-        dg.lemon.self.input = '2022-02'
+        dg.input = '2022-02'
 
-        expect(dg.innerHTML).to.include('2022-02-03')
-        expect(dg.innerHTML).not.to.include('2022-01')
+        expect(dg.el.innerHTML).to.include('2022-02-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01')
     })
     
     it('and changing page doesnt break data editing', () => { 
@@ -183,11 +183,11 @@ describe('Create a Datagrid with pagination', () => {
         })
         
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
 
         li[3].click()       
 
-        const tbody = dg.children[1].children[1]
+        const tbody = dg.el.children[1].children[1]
         const cell1 = tbody.children[0].children[0]
 
         cell1.dispatchEvent(new Event('dblclick')) 
@@ -218,12 +218,12 @@ describe('Create a Datagrid with pagination', () => {
         })
         
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
 
         li[3].click()   
 
-        const tbody = dg.children[1].children[1]
-        const headers = dg.children[1].children[0].children[0].children
+        const tbody = dg.el.children[1].children[1]
+        const headers = dg.el.children[1].children[0].children[0].children
 
         headers[0].click()
 

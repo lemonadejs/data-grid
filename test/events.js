@@ -22,7 +22,7 @@ describe('Create a Datagrid and trigger event', () => {
             }
         })
         
-        dg.lemon.self.setValue(0, 0, 'Something')
+        dg.setValue(0, 0, 'Something')
         expect(stateOutside).to.equal('after onupdate')
     })
 });

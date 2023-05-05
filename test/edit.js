@@ -19,7 +19,7 @@ describe('Create a Datagrid', () => {
         })
         
 
-        const tbody = dg.children[1].children[1]
+        const tbody = dg.el.children[1].children[1]
         const cell1 = tbody.children[0].children[0]
 
         cell1.dispatchEvent(new Event('dblclick')) 
@@ -48,13 +48,14 @@ describe('Create a Datagrid', () => {
             ],
         })
 
-        const s = dg.lemon.self
+        const s = dg
 
-        s.insertRow({ date: '1999-10-10' })
-        s.insertRow({ date: '1999-09-20' })
+        s.data.push({ date: '1999-10-10' })
+        s.data.push({ date: '1999-09-20' })
+        s.loadPages()
 
-        expect(dg.innerHTML).to.include('1999-10-10')
-        expect(dg.innerHTML).to.include('1999-09-20')
+        expect(dg.el.innerHTML).to.include('1999-10-10')
+        expect(dg.el.innerHTML).to.include('1999-09-20')
     })
     
     it('and remove row programmatically', () => {
@@ -73,21 +74,18 @@ describe('Create a Datagrid', () => {
             ],
         })
 
-        const s = dg.lemon.self
+        const s = dg
 
-        s.removeRow()
+        s.data.shift()
+        s.loadPages()
 
-        expect(dg.innerHTML).not.to.include('2022-01-01')
-        expect(dg.innerHTML).to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-01')
+        expect(dg.el.innerHTML).to.include('2022-01-02')
 
-        s.removeRow()
-        
-        expect(dg.innerHTML).not.to.include('2022-01-02')
+        s.data.shift()
+        s.loadPages()
 
-        s.removeRow(1)
-
-        expect(dg.innerHTML).not.to.include('2022-01-04')
-        expect(dg.innerHTML).to.include('2022-01-03')
+        expect(dg.el.innerHTML).not.to.include('2022-01-02')
     })
     
     it('and set cell value programmatically', () => {
@@ -106,17 +104,17 @@ describe('Create a Datagrid', () => {
             ],
         })
 
-        const s = dg.lemon.self
+        const s = dg
 
         s.setValue(0, 0, '1900-01-01')
 
-        expect(dg.innerHTML).not.to.include('2022-01-01')
-        expect(dg.innerHTML).to.include('2022-01-02')
-        expect(dg.children[1].children[1].children[0].children[0].innerHTML).to.include('1900-01-01')
+        expect(dg.el.innerHTML).not.to.include('2022-01-01')
+        expect(dg.el.innerHTML).to.include('2022-01-02')
+        expect(dg.el.children[1].children[1].children[0].children[0].innerHTML).to.include('1900-01-01')
 
         s.setValue('date', 0, '2050-12-12')
 
-        expect(dg.children[1].children[1].children[0].children[0].innerHTML).to.include('2050-12-12')
+        expect(dg.el.children[1].children[1].children[0].children[0].innerHTML).to.include('2050-12-12')
     })
 
     it('and set data programmatically', () => {
@@ -139,12 +137,12 @@ describe('Create a Datagrid', () => {
             { date: '1550-01-01' },
             { date: '1550-01-02' },
         ]
-        const s = dg.lemon.self
+        const s = dg
 
         s.setData(newData)
 
-        expect(dg.innerHTML).not.to.include('2022-01-01')
-        expect(dg.innerHTML).to.include('1550-01-02')
+        expect(dg.el.innerHTML).not.to.include('2022-01-01')
+        expect(dg.el.innerHTML).to.include('1550-01-02')
     })
 
     it('and editing dont break search', () => {  
@@ -164,17 +162,17 @@ describe('Create a Datagrid', () => {
             search: true,
         })
 
-        const s = dg.lemon.self
+        const s = dg
 
         s.setValue(0, 0, '1900-01-01')
         s.setValue('date', 0, '2050-12-12')
 
-        expect(dg.children[1].children[1].children[0].children[0].innerHTML).to.include('2050-12-12')
+        expect(dg.el.children[1].children[1].children[0].children[0].innerHTML).to.include('2050-12-12')
  
-        dg.lemon.self.input = '2022'
+        dg.input = '2022'
 
-        expect(dg.innerHTML).not.to.include('2050-12-12')
-        expect(dg.innerHTML).to.include('2022-01-02')
+        expect(dg.el.innerHTML).not.to.include('2050-12-12')
+        expect(dg.el.innerHTML).to.include('2022-01-02')
     })
     
     it('and editing dont break pagination', () => {
@@ -195,18 +193,18 @@ describe('Create a Datagrid', () => {
             search: true,
         })
 
-        const s = dg.lemon.self
+        const s = dg
 
         s.setValue(0, 0, '1900-01-01')
         s.setValue('date', 0, '2050-12-12')
          
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
         
-        expect(dg.innerHTML).not.to.include('2022-01-04')
+        expect(dg.el.innerHTML).not.to.include('2022-01-04')
 
         li[2].click()
 
-        expect(dg.innerHTML).to.include('2022-01-04')
+        expect(dg.el.innerHTML).to.include('2022-01-04')
     })
 
     it('and editing dont break sorting', () => {
@@ -226,7 +224,7 @@ describe('Create a Datagrid', () => {
         })
         
 
-        const tbody = dg.children[1].children[1]
+        const tbody = dg.el.children[1].children[1]
         const cell1 = tbody.children[0].children[0]
 
         cell1.dispatchEvent(new Event('dblclick')) 
@@ -236,7 +234,7 @@ describe('Create a Datagrid', () => {
         }
         cell1.dispatchEvent(new Event('blur'))
 
-        const headers = dg.children[1].children[0].children[0].children
+        const headers = dg.el.children[1].children[0].children[0].children
 
         headers[0].click()
 

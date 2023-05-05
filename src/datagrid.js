@@ -161,7 +161,7 @@
 
         const search = function (str) {
             // Filter the data
-            result = self.result = self.data = self.data.filter(function (item) {
+            result = self.result = self.data.filter(function (item) {
                 return find(item, str);
             });
 

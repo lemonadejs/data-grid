@@ -18,8 +18,8 @@ describe('Create a Datagrid with search', () => {
             search: true,
         })
 
-        const tbody = dg.children[1].children[1]
-        const headers = dg.children[1].children[0].children[0].children
+        const tbody = dg.el.children[1].children[1]
+        const headers = dg.el.children[1].children[0].children[0].children
 
         headers[0].click()
 
@@ -64,22 +64,22 @@ describe('Create a Datagrid with search', () => {
             pagination: 3,
         })
 
-        const tbody = dg.children[1].children[1]
-        const headers = dg.children[1].children[0].children[0].children
+        const tbody = dg.el.children[1].children[1]
+        const headers = dg.el.children[1].children[0].children[0].children
 
         headers[0].click()
 
-        const li = dg.children[2].children[0].children
+        const li = dg.el.children[2].children[0].children
         li[3].click()
 
-        expect(dg.innerHTML).to.include('Danny')
-        expect(dg.innerHTML).not.to.include('Alice')
+        expect(dg.el.innerHTML).to.include('Danny')
+        expect(dg.el.innerHTML).not.to.include('Alice')
 
         headers[0].click()
         li[3].click()
 
-        expect(dg.innerHTML).not.to.include('Danny')
-        expect(dg.innerHTML).to.include('Alice')
+        expect(dg.el.innerHTML).not.to.include('Danny')
+        expect(dg.el.innerHTML).to.include('Alice')
     })
 
     it('and dont break search', () => {
@@ -100,20 +100,20 @@ describe('Create a Datagrid with search', () => {
             pagination: 3,
         })
 
-        const tbody = dg.children[1].children[1]
-        const headers = dg.children[1].children[0].children[0].children
+        const tbody = dg.el.children[1].children[1]
+        const headers = dg.el.children[1].children[0].children[0].children
 
         headers[0].click()
 
-        dg.lemon.self.input = 'a'
+        dg.input = 'a'
 
-        expect(dg.innerHTML).not.to.include('Celine')
-        expect(dg.innerHTML).to.include('Alice')
+        expect(dg.el.innerHTML).not.to.include('Celine')
+        expect(dg.el.innerHTML).to.include('Alice')
 
-        dg.lemon.self.input = 'celine'
+        dg.input = 'celine'
 
-        expect(dg.innerHTML).not.to.include('Aline')
-        expect(dg.innerHTML).to.include('Celine')
+        expect(dg.el.innerHTML).not.to.include('Aline')
+        expect(dg.el.innerHTML).to.include('Celine')
     })
 
     it('and dont break cell edit', () => {
@@ -134,8 +134,8 @@ describe('Create a Datagrid with search', () => {
             pagination: 3,
         })
 
-        const tbody = dg.children[1].children[1]
-        const headers = dg.children[1].children[0].children[0].children
+        const tbody = dg.el.children[1].children[1]
+        const headers = dg.el.children[1].children[0].children[0].children
 
         headers[0].click()
         headers[0].click()
