@@ -28,9 +28,9 @@
             }
             s.parent.setData(s.parent.data.sort((a, b) => {
                 if (!controllers.sortingAsc) {
-                    return typeof a[s.name] === 'string' ? a[s.name].localeCompare(b[s.name]) : a[s.name] - b[s.name]
+                    return typeof a[s.name] === 'string' && typeof b[s.name] === 'string' ? a[s.name].localeCompare(b[s.name]) : Number(a[s.name]) - Number(b[s.name])
                 }
-                return typeof a[s.name] === 'string' ? b[s.name].localeCompare(a[s.name]) : b[s.name] - a[s.name]
+                return typeof a[s.name] === 'string' && typeof b[s.name] === 'string' ? b[s.name].localeCompare(a[s.name]) : Number(b[s.name]) - Number(a[s.name])
             }))
             controllers.sortingBy = s.name
         }
@@ -100,23 +100,13 @@
             self.page = pg
         }
 
-        self.insertRow = function (row) {
-            self.data.push(row)
-            page()
-        }
-
-        self.removeRow = function (y) {
-            self.data.splice(y, 1)
-            page()
-        }
-
         self.setData = function (data) {
             result = self.result = self.data = data
             self.page = 0
             page()
 
             if (typeof self.onupdate == 'function') {
-                self.onupdate(self.data)
+                self.onupdate(self.result)
             }
         }
 
@@ -125,8 +115,12 @@
             self.data[y][property] = value
 
             if (typeof self.onupdate == 'function') {
-                self.onupdate(self.data, { x, y, value })
+                self.onupdate(self.result, { x, y, value })
             }
+        }
+
+        self.loadPages = function() {
+            page()
         }
 
         self.onchange = function (prop) {
@@ -167,7 +161,7 @@
 
         const search = function (str) {
             // Filter the data
-            result = self.result = self.data.filter(function (item) {
+            result = self.result = self.data = self.data.filter(function (item) {
                 return find(item, str);
             });
 
@@ -233,7 +227,7 @@
                     // First page
                     pages.push({
                         title: Number(self.page) > 0 ? Number(self.page) - 1 : Number(self.page),
-                        value: '«',
+                        value: 'Previous',
                         selected: false,
                     });
 
@@ -250,7 +244,7 @@
                     // Last page
                     pages.push({
                         title: Number(self.page) < (i - 1) ? Number(self.page) + 1 : Number(self.page),
-                        value: '»',
+                        value: 'Next',
                         selected: false,
                     });
                 }
@@ -266,8 +260,9 @@
         }
 
         let columns = '';
-        self.columns.map((v) => {
-            columns += `<td :property="'${v.name}'" style="width: ${v.width || '80px'};">{{self.${v.name}}}</td>`;
+
+        self.columns.forEach((v) => {
+            columns += `<td :property="'${v.name}'" style="width: ${v.width || '80px'};text-align: ${v.align || 'left'};">${v.renderCell ? v.renderCell : `{{self.${v.name}}}`}</td>`;
         })
 
         let template = `<div class="datagrid-card">
@@ -292,7 +287,8 @@
 
     return function(root, options) {
         if (typeof root == 'object') {
-            return lemonade.render(Datagrid, root, options)
+            lemonade.render(Datagrid, root, options)
+            return options
         } else {
             return Datagrid.call(this, root)
         }
