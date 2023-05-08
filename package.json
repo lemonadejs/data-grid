@@ -1,21 +1,39 @@
 {
-    "name": "datagrid",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@lemonadejs/datagrid",
+    "title": "LemonadeJS data grid extension",
+    "description": "LemonadeJS data grid extension. A light-weight data grid with search, pagination, sort and cell editing",
+    "version": "0.1.0",
+    "main": "./dist/index.js",
+    "author": {
+        "name": "Contact <contact@lemonadejs.net>",
+        "url": "https://lemonadejs.net"
+    },
+    "keywords": [
+        "javascript template with search and pagination",
+        "javascript router",
+        "lemonadejs plugins",
+        "js",
+        "library",
+        "javascript plugins"
+    ],
+    "files": [
+        "dist/**/*"
+    ],
+    "private": false,
     "dependencies": {
-        "chai": "^4.3.7",
-        "jsdom": "^22.0.0",
-        "jsdom-global": "^3.0.2",
-        "lemonadejs": "^3.2",
-        "mocha": "^10.2.0"
+        "lemonadejs": "^3.2"
     },
     "scripts": {
-        "build": "npx webpack --mode=production --config webpack.build.config.js",
+        "build": "npx webpack --mode=production --config webpack.config.js",
         "start": "npx webpack serve --history-api-fallback --mode=development",
         "test": "mocha --recursive --require=mocha.config.js",
         "test:watch": "mocha --recursive --watch --parallel --reporter min --require=mocha.config.js"
     },
     "devDependencies": {
+        "mocha": "^10.2.0",
+        "chai": "^4.3.7",
+        "jsdom": "^22.0.0",
+        "jsdom-global": "^3.0.2",
         "copy-webpack-plugin": "^11.0.0",
         "css-loader": "^6.7.3",
         "html-replace-webpack-plugin": "^2.6.0",

@@ -1,0 +1,9 @@
+.idea
+.project
+.settings
+.gitignore
+.npmignore
+src
+test/*
+README.md
+*.config.js
