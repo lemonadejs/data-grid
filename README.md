@@ -32,7 +32,7 @@ Instantiate the data grid by providing the required parameters, including the da
 ```html
 <div id='root'></div>
 <script>
-    const root = getElementById('root')
+    const root = document.getElementById('root')
     Datagrid(root, {
         data: [
             { id: 1, person: 'Maria', age: 28 },
