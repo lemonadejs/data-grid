@@ -1,2 +1,4 @@
 import Datagrid from "./datagrid";
-import './style.css'
+import './style.css';
+
+export default Datagrid;

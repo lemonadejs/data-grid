@@ -4,17 +4,8 @@
             global.Datagrid = factory();
 }(this, (function () {
 
-
-    if (typeof (lemonade) == 'undefined') {
-        if (typeof (require) === 'function') {
-            var lemonade = require('lemonadejs');
-        } else if (window.lemonade) {
-            var lemonade = window.lemonade;
-        }
-    }
-
     let controllers = {};
-
+    let L = lemonade;
 
     function handleClick(e) {
 
@@ -256,7 +247,7 @@
         const Pagination = function () {
             // Pagination
             let template = `<li onclick="self.parent.page = this.title;" title="{{self.title}}" selected="{{self.selected}}">{{self.value}}</li>`;
-            return lemonade.element(template, this);
+            return L.element(template, this);
         }
 
         let columns = '';
@@ -282,12 +273,12 @@
                           <div class="datagrid-pagination-section"><ul page="{{self.page}}"><Pagination @loop="self.pages"/></ul></div>
                         </div>`;
 
-        return lemonade.element(template, self, { Pagination });
+        return L.element(template, self, { Pagination: Pagination });
     }
 
     return function(root, options) {
         if (typeof root == 'object') {
-            lemonade.render(Datagrid, root, options)
+            L.render(Datagrid, root, options)
             return options
         } else {
             return Datagrid.call(this, root)

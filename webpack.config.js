@@ -1,36 +1,38 @@
-const path = require('path');
-
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, argv) => {
     const config = {
+        target: ['web', 'es5'],
         entry: {
-            main: './src/index.js',
+            'index': './src/index.js',
         },
-        optimization: {
-            minimize: false
-        },
+        mode: 'production',
         output: {
-            filename: 'index.js',
-            path: path.resolve(__dirname, 'dist'),
+            library: {
+                name: 'Datagrid',
+                type: 'umd',
+                export: [ 'default' ],
+            },
+            globalObject: 'this',
+            filename: '[name].js',
         },
         externals: {
-            'lemonadejs': 'lemonade'
+            lemonadejs: "lemonadejs",
+        },
+        plugins: [],
+        optimization: {
+            minimize: true
         },
         module: {
             rules: [
                 {
                     test: /\.css$/,
-                    use: [
-                        argv.mode === "production"
-                            ? MiniCssExtractPlugin.loader
-                            : "style-loader",
-                        "css-loader",
+                    use: [ MiniCssExtractPlugin.loader,
+                        "css-loader"
                     ],
                 },
             ],
         },
-        plugins: [],
         stats: { warnings:false },
     };
 
