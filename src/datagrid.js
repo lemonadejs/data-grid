@@ -137,7 +137,7 @@
                 self.page = 0;
             }
 
-            self.search = self.search != 'true' ? false : true
+            self.search = !!self.search
         }
 
         const find = function (o, query) {
@@ -253,7 +253,7 @@
         let columns = '';
 
         self.columns.forEach((v) => {
-            columns += `<td :property="'${v.name}'" style="width: ${v.width || '80px'};text-align: ${v.align || 'left'};">${v.renderCell ? v.renderCell : `{{self.${v.name}}}`}</td>`;
+            columns += `<td :property="'${v.name}'" style="max-width: ${v.width || '100px'}; min-width: ${v.width || '100px'};text-align: ${v.align || 'left'}">${v.renderCell ? v.renderCell : `{{self.${v.name}}}`}</td>`;
         })
 
         let template = `<div class="datagrid-card">
@@ -261,7 +261,7 @@
                           <table id="datagrid-table" class="datagrid-table">
                             <thead>
                                 <tr @loop="self.columns">
-                                    <th style="width: {{self.width || '80px'}};">
+                                    <th style="max-width: ${self.width || '100px'}; min-width: ${self.width || '100px'}">
                                         {{self.headerName}}
                                     </th>
                                 </tr>

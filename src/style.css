@@ -5,7 +5,7 @@
     border-radius: 5px;
     box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
-    font-family: monospace;
+    font-family: sans-serif;
 }
 
 
@@ -28,6 +28,7 @@
 .datagrid-pagination-section {
     display: flex;
     justify-content: flex-end;
+    user-select: none;
 }
 
 .datagrid-pagination-section ul {
@@ -89,6 +90,7 @@
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 table:hover {

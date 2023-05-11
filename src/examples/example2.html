@@ -3,72 +3,18 @@
 <script src="../datagrid.js"></script>
 <link rel="stylesheet" href="../style.css" />
 
-<div id='root'></div>
+<div id='root' style="width: 100%; height: 100%;"></div>
 <script>
-    function Component() {
-        const self = this;
-
-        self.data = [
-            {
-                date: "2023-04-30",
-                description: "Salary Deposit",
-                category: "Income",
-                amount: 5000.00,
-            },
-            {
-                date: "2023-04-30",
-                description: "Grocery Store",
-                category: "Expenses",
-                amount: -75.99,
-            },
-            {
-                date: "2023-05-01",
-                description: "ATM Withdrawal",
-                category: "Expenses",
-                amount: -200.00,
-            },
-            {
-                date: "2023-05-02",
-                description: "Electric Bill",
-                category: "Expenses",
-                amount: -125.50,
-            },
-            {
-                date: "2023-05-03",
-                description: "Gas Station",
-                category: "Expenses",
-                amount: -50.00,
-            },
-            {
-                date: "2023-05-04",
-                description: "Phone Bill",
-                category: "Expenses",
-                amount: -55.00,
-            }
-        ];
-
-        self.columns = [
-            { name: 'date', headerName: 'Date', width: '100px', align: 'center' },
-            { name: 'description', headerName: 'Description', width: '200px', align: 'center' },
-            { name: 'category', headerName: 'Category', width: '100px', align: 'center' },
-            { name: 'amount', headerName: 'Amount (USD)', width: '100px', align: 'center' },
-        ]
-
-        self.goToPage = function () {
-            let page = Number(document.getElementById('pageInput').value)
-            self.datagridRef.goto(page - 1)
-        }
-
-        return `<div>
-            <Datagrid data={{self.data}} columns={{self.columns}} pagination="2" :ref="datagridRef" />
-            <br/>
-            <input type="text" id="pageInput" placeholder="page" />
-            <input type="button" value="Go to" id="insertButton" onclick="self.goToPage()" />
-        </div>`
-    }
-
-    lemonade.setComponents({ Datagrid })
-
-    lemonade.render(Component, document.getElementById('root'));
+    const root = document.getElementById('root')
+    const dg = Datagrid(root, {
+        data: [
+            { id: 1, person: 'Maria', age: 28 },
+            { id: 2, person: 'Carlos', age: 33 }
+        ],
+        columns: [
+            { name: 'person', headerName: 'Name', width: '500px', align: 'right' },
+            { name: 'age', headerName: 'Age', align: 'center' },
+        ],
+    })
 </script>
 </html>
