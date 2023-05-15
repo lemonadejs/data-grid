@@ -3,6 +3,7 @@
 .settings
 .gitignore
 .npmignore
+index.html
 src
 test/*
 README.md

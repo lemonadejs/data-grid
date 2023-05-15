@@ -1,7 +1,8 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
 
 module.exports = (env, argv) => {
-    const config = {
+    const prod_config = {
         target: ['web', 'es5'],
         entry: {
             'index': './src/index.js',
@@ -11,7 +12,7 @@ module.exports = (env, argv) => {
             library: {
                 name: 'Datagrid',
                 type: 'umd',
-                export: [ 'default' ],
+                export: ['default'],
             },
             globalObject: 'this',
             filename: '[name].js',
@@ -27,22 +28,60 @@ module.exports = (env, argv) => {
             rules: [
                 {
                     test: /\.css$/,
-                    use: [ MiniCssExtractPlugin.loader,
+                    use: [MiniCssExtractPlugin.loader,
                         "css-loader"
                     ],
                 },
             ],
         },
-        stats: { warnings:false },
+        stats: { warnings: false },
     };
 
+    const dev_config = {
+        target: 'web',
+        entry: './src/index.js',
+        mode: 'development',
+        optimization: {
+            minimize: false
+        },
+        output: {
+            filename: 'index.js',
+            path: path.resolve(__dirname, 'dist'),
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.css$/,
+                    use: ['style-loader', 'css-loader'],
+                },
+            ],
+        },
+        devServer: {
+            // contentBase
+            static: {
+                directory: path.join(__dirname, "/")
+            },
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+                "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+            },
+            port: 3005,
+            devMiddleware: {
+                publicPath: "https://localhost:3000/dist/",
+            },
+            hot: "only",
+        },
+        stats: { warnings: false }
+    }
+
     if (argv.mode === "production") {
-        config.plugins.push(
+        prod_config.plugins.push(
             new MiniCssExtractPlugin({
                 filename: "style.css",
             }),
         );
     }
 
-    return config;
+    return argv.mode === 'production' ? prod_config : dev_config;
 };

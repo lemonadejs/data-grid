@@ -22,6 +22,7 @@
         "lemonadejs": "^3.2.0"
     },
     "scripts": {
+        "start": "npx webpack serve --history-api-fallback",
         "build": "npx webpack --mode=production --config webpack.config.js",
         "test": "mocha --recursive --require=mocha.config.js",
         "test:watch": "mocha --recursive --watch --parallel --reporter min --require=mocha.config.js",
