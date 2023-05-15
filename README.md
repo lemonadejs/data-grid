@@ -104,7 +104,7 @@ Here are a few examples of DataGridLM in action:
 
 ### Running the project
 
-To run the project in development mode, use the following command:
+To run the project in development mode, use the following commands:
 
 ```bash
 $ npm i
