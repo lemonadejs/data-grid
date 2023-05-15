@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect } = require('chai')
 
 describe('Create an instance of Datagrid', () => {
     it('and wanted columns are displayed', () => {
@@ -57,7 +57,7 @@ describe('Create an instance of Datagrid', () => {
             ],
             columns: [
                 { name: 'date', headerName: 'Date' },
-                { name: 'product', headerName: 'Product' },
+                { name: 'product', headerName: 'Product' }
             ]
         })
 
@@ -84,9 +84,9 @@ describe('Create an instance of Datagrid', () => {
     xit('with empty arrays', () => {
         let dg = Datagrid(root, {
             data: [],
-            columns: [],
+            columns: []
         })
 
         expect(dg.el.innerHTML).to.include('No data available')
     })
-});
+})

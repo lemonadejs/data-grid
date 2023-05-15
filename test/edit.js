@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect } = require('chai')
 
 describe('Create a Datagrid', () => {
     it('and edit cells', () => {
@@ -10,28 +10,25 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
-            pagination: 2,
+            columns: [{ name: 'date', headerName: 'Date' }],
+            pagination: 2
         })
-        
 
         const tbody = dg.el.children[1].children[1]
         const cell1 = tbody.children[0].children[0]
 
-        cell1.dispatchEvent(new Event('dblclick')) 
+        cell1.dispatchEvent(new Event('dblclick'))
         for (const char of ' 11:00') {
             cell1.textContent += char
-            cell1.dispatchEvent(new Event('input', {bubbles: true}))
+            cell1.dispatchEvent(new Event('input', { bubbles: true }))
         }
         cell1.dispatchEvent(new Event('blur'))
 
         expect(cell1.innerHTML).to.include('2022-01-01 11:00')
     })
-    
+
     it('and add row programmatically', () => {
         let dg = Datagrid(root, {
             data: [
@@ -41,11 +38,9 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
+            columns: [{ name: 'date', headerName: 'Date' }]
         })
 
         const s = dg
@@ -57,7 +52,7 @@ describe('Create a Datagrid', () => {
         expect(dg.el.innerHTML).to.include('1999-10-10')
         expect(dg.el.innerHTML).to.include('1999-09-20')
     })
-    
+
     it('and remove row programmatically', () => {
         let dg = Datagrid(root, {
             data: [
@@ -67,11 +62,9 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
+            columns: [{ name: 'date', headerName: 'Date' }]
         })
 
         const s = dg
@@ -87,7 +80,7 @@ describe('Create a Datagrid', () => {
 
         expect(dg.el.innerHTML).not.to.include('2022-01-02')
     })
-    
+
     it('and set cell value programmatically', () => {
         let dg = Datagrid(root, {
             data: [
@@ -97,11 +90,9 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
+            columns: [{ name: 'date', headerName: 'Date' }]
         })
 
         const s = dg
@@ -126,17 +117,12 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
+            columns: [{ name: 'date', headerName: 'Date' }]
         })
 
-        const newData = [
-            { date: '1550-01-01' },
-            { date: '1550-01-02' },
-        ]
+        const newData = [{ date: '1550-01-01' }, { date: '1550-01-02' }]
         const s = dg
 
         s.setData(newData)
@@ -145,7 +131,7 @@ describe('Create a Datagrid', () => {
         expect(dg.el.innerHTML).to.include('1550-01-02')
     })
 
-    it('and editing dont break search', () => {  
+    it('and editing dont break search', () => {
         let dg = Datagrid(root, {
             data: [
                 { date: '2022-01-01' },
@@ -154,12 +140,10 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
-            search: true,
+            columns: [{ name: 'date', headerName: 'Date' }],
+            search: true
         })
 
         const s = dg
@@ -168,13 +152,13 @@ describe('Create a Datagrid', () => {
         s.setValue('date', 0, '2050-12-12')
 
         expect(dg.el.children[1].children[1].children[0].children[0].innerHTML).to.include('2050-12-12')
- 
+
         dg.input = '2022'
 
         expect(dg.el.innerHTML).not.to.include('2050-12-12')
         expect(dg.el.innerHTML).to.include('2022-01-02')
     })
-    
+
     it('and editing dont break pagination', () => {
         let dg = Datagrid(root, {
             data: [
@@ -184,22 +168,20 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
+            columns: [{ name: 'date', headerName: 'Date' }],
             pagination: 3,
-            search: true,
+            search: true
         })
 
         const s = dg
 
         s.setValue(0, 0, '1900-01-01')
         s.setValue('date', 0, '2050-12-12')
-         
+
         const li = dg.el.children[2].children[0].children
-        
+
         expect(dg.el.innerHTML).not.to.include('2022-01-04')
 
         li[2].click()
@@ -216,21 +198,18 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-04' },
                 { date: '2022-01-05' },
                 { date: '2022-01-06' },
-                { date: '2022-01-07' },
+                { date: '2022-01-07' }
             ],
-            columns: [
-                { name: 'date', headerName: 'Date' },
-            ],
+            columns: [{ name: 'date', headerName: 'Date' }]
         })
-        
 
         const tbody = dg.el.children[1].children[1]
         const cell1 = tbody.children[0].children[0]
 
-        cell1.dispatchEvent(new Event('dblclick')) 
+        cell1.dispatchEvent(new Event('dblclick'))
         for (const char of ' 11:00') {
             cell1.textContent += char
-            cell1.dispatchEvent(new Event('input', {bubbles: true}))
+            cell1.dispatchEvent(new Event('input', { bubbles: true }))
         }
         cell1.dispatchEvent(new Event('blur'))
 
@@ -248,4 +227,4 @@ describe('Create a Datagrid', () => {
         expect(tbody.children[1].children[0].innerHTML).to.equal('2022-01-06')
         expect(tbody.children[6].children[0].innerHTML).to.equal('2022-01-01 11:00')
     })
-});
+})

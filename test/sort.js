@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect } = require('chai')
 
 describe('Create a Datagrid with search', () => {
     it('and search successfully', () => {
@@ -9,13 +9,13 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Carlos', grade: 6 },
                 { name: 'Danny', grade: 7 },
                 { name: 'Celine', grade: 8 },
-                { name: 'Arthur', grade: 10 },
+                { name: 'Arthur', grade: 10 }
             ],
             columns: [
                 { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' },
+                { name: 'grade', headerName: 'Grade' }
             ],
-            search: true,
+            search: true
         })
 
         const tbody = dg.el.children[1].children[1]
@@ -54,14 +54,14 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Carlos', grade: 6 },
                 { name: 'Danny', grade: 7 },
                 { name: 'Celine', grade: 8 },
-                { name: 'Arthur', grade: 10 },
+                { name: 'Arthur', grade: 10 }
             ],
             columns: [
                 { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' },
+                { name: 'grade', headerName: 'Grade' }
             ],
             search: true,
-            pagination: 3,
+            pagination: 3
         })
 
         const tbody = dg.el.children[1].children[1]
@@ -90,14 +90,14 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Carlos', grade: 6 },
                 { name: 'Danny', grade: 7 },
                 { name: 'Celine', grade: 8 },
-                { name: 'Arthur', grade: 10 },
+                { name: 'Arthur', grade: 10 }
             ],
             columns: [
                 { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' },
+                { name: 'grade', headerName: 'Grade' }
             ],
             search: true,
-            pagination: 3,
+            pagination: 3
         })
 
         const tbody = dg.el.children[1].children[1]
@@ -124,14 +124,14 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Carlos', grade: 6 },
                 { name: 'Danny', grade: 7 },
                 { name: 'Celine', grade: 8 },
-                { name: 'Arthur', grade: 10 },
+                { name: 'Arthur', grade: 10 }
             ],
             columns: [
                 { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' },
+                { name: 'grade', headerName: 'Grade' }
             ],
             search: true,
-            pagination: 3,
+            pagination: 3
         })
 
         const tbody = dg.el.children[1].children[1]
@@ -142,10 +142,10 @@ describe('Create a Datagrid with search', () => {
 
         let cell1 = tbody.children[0].children[0]
 
-        cell1.dispatchEvent(new Event('dblclick')) 
+        cell1.dispatchEvent(new Event('dblclick'))
         for (const char of ' Cooper') {
             cell1.textContent += char
-            cell1.dispatchEvent(new Event('input', {bubbles: true}))
+            cell1.dispatchEvent(new Event('input', { bubbles: true }))
         }
         cell1.dispatchEvent(new Event('blur'))
 
@@ -155,4 +155,4 @@ describe('Create a Datagrid with search', () => {
         headers[1].click()
         expect(tbody.children[0].children[0].innerHTML).to.include('Arthur')
     })
-});
+})

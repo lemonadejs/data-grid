@@ -1,20 +1,20 @@
 <html>
-<script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
-<script src="../datagrid.js"></script>
-<link rel="stylesheet" href="../style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
+    <script src="../datagrid.js"></script>
+    <link rel="stylesheet" href="../style.css" />
 
-<div id='root' style="width: 100%; height: 100%;"></div>
-<script>
-    const root = document.getElementById('root')
-    const dg = Datagrid(root, {
-        data: [
-            { id: 1, person: 'Maria', age: 28 },
-            { id: 2, person: 'Carlos', age: 33 }
-        ],
-        columns: [
-            { name: 'person', headerName: 'Name', width: '500px', align: 'right' },
-            { name: 'age', headerName: 'Age', align: 'center' },
-        ],
-    })
-</script>
+    <div id="root" style="width: 100%; height: 100%"></div>
+    <script>
+        const root = document.getElementById('root')
+        const dg = Datagrid(root, {
+            data: [
+                { id: 1, person: 'Maria', age: 28 },
+                { id: 2, person: 'Carlos', age: 33 }
+            ],
+            columns: [
+                { name: 'person', headerName: 'Name', width: '500px', align: 'right' },
+                { name: 'age', headerName: 'Age', align: 'center' }
+            ]
+        })
+    </script>
 </html>
