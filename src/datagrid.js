@@ -53,6 +53,7 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
         if (e.target.tagName == 'TD' && e.target.parentNode.lemon) {
             controllers.onEdition = [e.target, e.target.parentNode.lemon.self, e.target.property]
             e.target.setAttribute('contentEditable', true)
+            e.target.classList.add('edit-mode')
             e.target.focus()
         }
     }
@@ -66,6 +67,7 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
         // Handle the end of edition with cell value attribution.
         if (controllers.onEdition && e.target == controllers.onEdition[0]) {
             controllers.onEdition[0].removeAttribute('contentEditable')
+            e.target.classList.remove('edit-mode')
             controllers.onEdition[1].parent.setValue(
                 controllers.onEdition[2],
                 Array.prototype.indexOf.call(

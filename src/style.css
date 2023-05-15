@@ -89,7 +89,11 @@
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: clip;
+}
+
+.edit-mode {
+    text-overflow: inherit !important; 
 }
 
 table:hover {
