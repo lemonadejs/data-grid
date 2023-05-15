@@ -13,6 +13,13 @@ Welcome to Lemon Data-Grid! This lightweight JavaScript library allows you to ef
 
 Utilizing DataGridLM is straightforward. Just include the JavaScript file in your project and instantiate a new grid using the provided API. From there, you can effortlessly load data, define columns, and incorporate custom user actions as required.
 
+### npm Installation
+
+To install your project using npm, run the following command:
+```bash
+npm install @lemonadejs/datagrid
+```    
+
 ### CDN
 
 To use DataGrid via a CDN, include the following script tags in your HTML file:
@@ -20,15 +27,14 @@ To use DataGrid via a CDN, include the following script tags in your HTML file:
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@lemonadejs/datagrid/dist/index.min.js"></script>
 ```   
-### npm Installation
+### Usage
 
-To install your project using npm, run the following command:
-```bash
-npm install @lemonadejs/datagrid
-```    
-## Usage
+There is two ways to instantiate a DataGrid, Programatically or Dinamically
 
-Instantiate the data grid by providing the required parameters, including the data and columns.
+#### Programatically
+
+Create an instance of the data grid by providing the DOM element and the ***options*** object.
+
 ```html
 <div id='root'></div>
 <script>
@@ -45,9 +51,33 @@ Instantiate the data grid by providing the required parameters, including the da
     })
 </script>
 ```
-## Configuration
 
-You can also add ***pagination*** and ***search*** functionalities by adding it to the options. Eg:
+#### Dynamically with LemonadeJS
+
+The DataGrid is invoked within the template, with the options being passed as properties.
+
+
+```javascript
+function Component() {
+    let self = this
+
+    self.data = [
+        { id: 1, person: 'Maria', age: 28 },
+        { id: 2, person: 'Carlos', age: 33 }
+    ]
+
+    self.columns = [
+        { name: 'person', headerName: 'Name' },
+        { name: 'age', headerName: 'Age' },
+    ]
+
+    return `<Datagrid data="{{self.data}}" columns="{{self.columns}}" />`
+}
+```
+
+### Configuration
+
+Additionally, you have the option of incorporating ***pagination*** and ***search*** functionalities by including them in the options. For example:
 ```javascript
 Datagrid(root, {
         data: [
@@ -62,13 +92,46 @@ Datagrid(root, {
         search: true,
     })
 ```
-## Examples
+### Examples
 
 Here are a few examples of DataGridLM in action:
 
 - [Basic Data Grid Example](https://lemonadejs.net/components/datagrid#example-1)
 - [Example with Large Data Sets](https://lemonadejs.net/components/datagrid#example-2)
 - [Example with Data Addition and Deletion](https://lemonadejs.net/components/datagrid#example-3)
+
+## Development
+
+### Running the project
+
+To run the project in development mode, use the following command:
+
+```bash
+$ npm i
+$ npm start
+```
+
+This will start a web-server with a DataGrid page as playground. 
+
+### Running Tests
+
+After installing the packages run:
+
+```bash
+$ npm run test
+```
+
+To see more details in a browser:
+
+```bash
+$ npm run test:browser
+```
+
+To have more information about test coverage:
+
+```bash
+$ npm run test:coverage
+```
 
 ## Contributing
 

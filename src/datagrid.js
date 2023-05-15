@@ -1,3 +1,5 @@
+if(!lemonade&&"function"==typeof require) var lemonade=require("lemonadejs");
+
 ; (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
@@ -9,7 +11,7 @@
 
     function handleClick(e) {
 
-        // Handle clicks on table header cell
+        // Handle the sorting with single click on header cells.
         if (e.target.tagName == 'TH' && e.target.lemon) {
             let s = e.target.lemon.self
             if (s.name === controllers.sortingBy) {
@@ -26,7 +28,7 @@
             controllers.sortingBy = s.name
         }
 
-        // Handle single click on table body cell
+        // Handle the cell selection with single click on table body cells.
         if (e.target.tagName == 'TD' && e.target.parentNode.lemon) {
             if (controllers.selectedCell) {
                 controllers.selectedCell.classList.remove('datagrid-selected')
@@ -44,7 +46,7 @@
 
     function handleDoubleClick(e) {
 
-        // Handle double clicks on table body cell
+        // Handle the cell edition mode with double click on table body cells.
         if (e.target.tagName == 'TD' && e.target.parentNode.lemon) {
             controllers.onEdition = [e.target, e.target.parentNode.lemon.self, e.target.property]
             e.target.setAttribute('contentEditable', true)
@@ -58,6 +60,7 @@
             controllers.selectedCell = null;
         }
 
+        // Handle the end of edition with cell value attribution.
         if (controllers.onEdition && e.target == controllers.onEdition[0]) {
             controllers.onEdition[0].removeAttribute('contentEditable')
             controllers.onEdition[1].parent.setValue(
@@ -87,10 +90,27 @@
 
         let result = self.result = self.data;
 
+
+        if (self.data === undefined || self.data === null) {
+            self.data = []
+        }
+
+        if (self.columns === undefined || self.columns === null) {
+            self.columns = []
+        }
+
+        /**
+        * Change selected page.
+        * @param {Number} pg Specify the destination page to visit. Starts from 1.
+        */
         self.goto = function (pg) {
             self.page = pg
         }
 
+        /**
+        * Change the component state of data and re-render pagination.
+        * @param {Array} data The new data to display in the datagrid.
+        */
         self.setData = function (data) {
             result = self.result = self.data = data
             self.page = 0
@@ -101,6 +121,12 @@
             }
         }
 
+        /**
+        * Set the value of a cell based on the provided coordinates.
+        * @param {Number | String} x The column identificator, can be the number or the name of the column.
+        * @param {Number} y The row position.
+        * @param {String} value The new value that the cell will receive.
+        */
         self.setValue = function (x, y, value) {
             let property = typeof x === 'number' ? self.columns[x].name : x
             self.data[y][property] = value
@@ -110,6 +136,7 @@
             }
         }
 
+        // Reload the pagination and rows of the table.
         self.loadPages = function() {
             page()
         }
@@ -252,6 +279,7 @@
 
         let columns = '';
 
+        // Build the columns structure
         self.columns.forEach((v) => {
             columns += `<td :property="'${v.name}'" style="max-width: ${v.width || '100px'}; min-width: ${v.width || '100px'};text-align: ${v.align || 'left'}">${v.renderCell ? v.renderCell : `{{self.${v.name}}}`}</td>`;
         })
