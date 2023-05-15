@@ -141,6 +141,12 @@ $ npm run test:coverage
 
 DataGridLM is an open source project and contributions are welcome! If you find a bug or have a feature request, please open an issue on GitHub. If you'd like to contribute code, please fork the repository and submit a pull request.
 
+Ensure that you run the formatting plugins to maintain consistent code patterns. You can use the following command to do that:
+
+```bash
+$ npm run format
+```
+
 ## License
 
 DataGridLM is released under the MIT.
