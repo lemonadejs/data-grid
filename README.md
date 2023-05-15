@@ -1,4 +1,5 @@
 # DataGridLM
+[Official website and documentation is here](https://lemonadejs.net/components/datagrid)
 
 Welcome to Lemon Data-Grid! This lightweight JavaScript library allows you to effortlessly create data grids featuring search, pagination, and editable rows. With DataGridLM, you can conveniently load JSON data, define columns, and seamlessly render the grid within your HTML.
 
