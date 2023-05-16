@@ -66,7 +66,12 @@ Create an instance of the data grid by providing the DOM element and the **_opti
 The DataGrid is invoked within the template, with the options being passed as properties.
 
 ```javascript
-function Component() {
+import Datagrid from '@lemonadejs/datagrid'
+import lemonade from 'lemonadejs'
+
+lemonade.setComponents({ Datagrid })
+
+export default function Component() {
     let self = this
 
     self.data = [
@@ -156,3 +161,8 @@ $ npm run format
 ## License
 
 DataGridLM is released under the MIT.
+
+## Other Tools
+
+[jSuites](https://jsuites.net/v4/)
+[Jspreadsheet](https://jspreadsheet.com)
