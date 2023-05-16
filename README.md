@@ -164,5 +164,5 @@ DataGridLM is released under the MIT.
 
 ## Other Tools
 
-[jSuites](https://jsuites.net/v4/)
-[Jspreadsheet](https://jspreadsheet.com)
+- [jSuites](https://jsuites.net/v4/)
+- [Jspreadsheet](https://jspreadsheet.com)
