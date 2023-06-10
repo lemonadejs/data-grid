@@ -21,7 +21,7 @@ Utilizing DataGridLM is straightforward. Just include the JavaScript file in you
 
 ### npm Installation
 
-To install your project using npm, run the following command:
+To install it in your project using npm, run the following command:
 
 ```bash
 $ npm install @lemonadejs/datagrid
@@ -164,5 +164,5 @@ DataGridLM is released under the MIT.
 
 ## Other Tools
 
-[jSuites](https://jsuites.net/v4/)
-[Jspreadsheet](https://jspreadsheet.com)
+- [jSuites](https://jsuites.net/v4/)
+- [Jspreadsheet](https://jspreadsheet.com)
