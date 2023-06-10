@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
         },
         plugins: [],
         optimization: {
-            minimize: true
+            minimize: false
         },
         module: {
             rules: [

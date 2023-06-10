@@ -290,7 +290,7 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
         self.columns.forEach((v) => {
             columns += `<td :property="'${v.name}'" style="max-width: ${v.width || '100px'}; min-width: ${
                 v.width || '100px'
-            };text-align: ${v.align || 'left'}">${v.renderCell ? v.renderCell : `{{self.${v.name}}}`}</td>`
+            };text-align: ${v.align || 'left'}">${v.render ? v.render() : `{{self.${v.name}}}`}</td>`
         })
 
         let template = `<div class="datagrid-card">
@@ -301,7 +301,7 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
                                     <th style="max-width: ${self.width || '100px'}; min-width: ${
             self.width || '100px'
         }">
-                                        {{self.headerName}}
+                                        {{self.title}}
                                     </th>
                                 </tr>
                             </thead>
