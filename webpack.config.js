@@ -18,11 +18,11 @@ module.exports = (env, argv) => {
             filename: '[name].js'
         },
         externals: {
-            lemonadejs: 'lemonadejs'
+            lemonadejs: 'lemonade'
         },
         plugins: [],
         optimization: {
-            minimize: false
+            minimize: true
         },
         module: {
             rules: [
