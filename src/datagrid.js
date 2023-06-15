@@ -201,7 +201,7 @@ if (!lemonade && 'function' == typeof require) {
             } else {
                 result = self.data
             }
-            
+
             // Go back to page zero
             self.page = 0;
         }
