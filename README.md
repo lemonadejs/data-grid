@@ -84,7 +84,7 @@ export default function Component() {
         { name: 'age', headerName: 'Age' }
     ]
 
-    return `<Datagrid data="{{self.data}}" columns="{{self.columns}}" />`
+    return `<Datagrid :data="self.data" :columns="self.columns" />`
 }
 ```
 
@@ -111,9 +111,9 @@ Datagrid(root, {
 
 Here are a few examples of DataGridLM in action:
 
--   [Basic Data Grid Example](https://lemonadejs.net/components/datagrid#example-1)
--   [Example with Large Data Sets](https://lemonadejs.net/components/datagrid#example-2)
--   [Example with Data Addition and Deletion](https://lemonadejs.net/components/datagrid#example-3)
+-   [Basic Data Grid Example](https://lemonadejs.net/components/data-grid#example-1)
+-   [Example with Large Data Sets](https://lemonadejs.net/components/data-grid#example-2)
+-   [Example with Data Addition and Deletion](https://lemonadejs.net/components/data-grid#example-3)
 
 ## Development
 
