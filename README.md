@@ -1,5 +1,5 @@
 # Javascript Data Grid
-[Official website and documentation is here](https://lemonadejs.net/components/datagrid)
+[Official website and documentation is here](https://lemonadejs.net/components/data-grid)
 
 Lemonade data grid is a lightweight JavaScript library that allows you to effortlessly create data grids featuring search, pagination, and editable rows. With the lemonade data grid, you can conveniently load JSON data, define columns, and seamlessly render the grid within your HTML.
 
@@ -10,7 +10,7 @@ Lemonade data grid is a lightweight JavaScript library that allows you to effort
 
 ## Features
 
--   Lightweight: DataGridLM is only about 5 Kbytes in size, making it fast and easy to load.
+-   Lightweight: Lemonade data grid is only about 4 Kbytes in size, making it fast and easy to load.
 -   Customizable: You can define columns and user-defined actions to suit your specific use case.
 -   Reactive: Any changes to the underlying data are automatically applied to the HTML, making it easy to keep your grid up-to-date.
 -   Integration: DataGridLM can be used as a standalone library or integrated with LemonadeJS or React.
