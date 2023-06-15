@@ -54,11 +54,6 @@
 
 .datagrid-table {
     border-collapse: collapse;
-    table-layout: fixed;
-    white-space: nowrap;
-    empty-cells: show;
-    width: 0;
-    
 }
 
 .datagrid-table .datagrid-selected {
@@ -91,7 +86,7 @@
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: clip;
 }
 
 .edit-mode {
