@@ -1,8 +1,6 @@
 .datagrid-card {
     display: inline-block;
-    padding: 21px;
     border-radius: 5px;
-    box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     font-family: sans-serif;
 }
@@ -55,11 +53,11 @@
 }
 
 .datagrid-table {
-    border-spacing: 0;
+    border-collapse: collapse;
 }
 
 .datagrid-table .datagrid-selected {
-    border: solid 1px black;
+    outline: solid 1px #00000011;
 }
 
 .datagrid-table tbody tr:nth-child(even) {
@@ -84,7 +82,6 @@
 
 .datagrid-table tbody td {
     font-size: 14px;
-    border-bottom-color: #75757555;
     height: 1px;
     box-sizing: border-box;
     white-space: nowrap;
@@ -93,7 +90,7 @@
 }
 
 .edit-mode {
-    text-overflow: inherit !important; 
+    text-overflow: inherit !important;
 }
 
 table:hover {

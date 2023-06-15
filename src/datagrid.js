@@ -1,18 +1,19 @@
-if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadejs')
+if (!lemonade && 'function' == typeof require) {
+    var lemonade = require('lemonadejs')
+}
+
 ;(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined'
-        ? (module.exports = factory())
-        : typeof define === 'function' && define.amd
-        ? define(factory)
-        : (global.Datagrid = factory())
-})(this, function () {
-    let controllers = {}
-    let L = lemonade
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    global.Datagrid = factory();
+}(this, (function () {
+    let controllers = {};
+    let L = lemonade;
 
     function handleClick(e) {
         // Handle the sorting with single click on header cells.
-        if (e.target.tagName == 'TH' && e.target.lemon) {
-            let s = e.target.lemon.self
+        if (e.target.tagName === 'TH' && e.target.lemon) {
+            let s = e.target.lemon.self;
             if (s.name === controllers.sortingBy) {
                 controllers.sortingAsc = !controllers.sortingAsc
             } else {
@@ -34,12 +35,12 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
         }
 
         // Handle the cell selection with single click on table body cells.
-        if (e.target.tagName == 'TD' && e.target.parentNode.lemon) {
+        if (e.target.tagName === 'TD' && e.target.parentNode.lemon) {
             if (controllers.selectedCell) {
                 controllers.selectedCell.classList.remove('datagrid-selected')
             }
 
-            if (controllers.selectedCell == e.target) {
+            if (controllers.selectedCell === e.target) {
                 controllers.selectedCell = null
             } else {
                 e.target.classList.add('datagrid-selected')
@@ -49,8 +50,9 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
     }
 
     function handleDoubleClick(e) {
+        let lemon = e.target.parentNode.lemon;
         // Handle the cell edition mode with double click on table body cells.
-        if (e.target.tagName == 'TD' && e.target.parentNode.lemon) {
+        if (e.target.tagName === 'TD' && lemon && lemon.self.parent.editable === true) {
             controllers.onEdition = [e.target, e.target.parentNode.lemon.self, e.target.property]
             e.target.setAttribute('contentEditable', true)
             e.target.classList.add('edit-mode')
@@ -59,13 +61,13 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
     }
 
     function blur(e) {
-        if (e.target == controllers.selectedCell) {
+        if (e.target === controllers.selectedCell) {
             e.target.classList.remove('datagrid-selected')
             controllers.selectedCell = null
         }
 
         // Handle the end of edition with cell value attribution.
-        if (controllers.onEdition && e.target == controllers.onEdition[0]) {
+        if (controllers.onEdition && e.target === controllers.onEdition[0]) {
             controllers.onEdition[0].removeAttribute('contentEditable')
             e.target.classList.remove('edit-mode')
             controllers.onEdition[1].parent.setValue(
@@ -76,55 +78,39 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
                 ),
                 e.target.innerText
             )
-            controllers.onEdition = []
+            controllers.onEdition = [];
         }
     }
 
     function handleKeyboard(e) {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             if (controllers.onEdition) {
                 controllers.onEdition[0].blur()
             }
         }
     }
 
-    document.addEventListener('click', handleClick)
-    document.addEventListener('dblclick', handleDoubleClick)
-    document.addEventListener('blur', blur, true)
-    document.addEventListener('keydown', handleKeyboard)
-
     const Datagrid = function () {
         let self = this
 
-        let result = (self.result = self.data)
+        // Make sure this is boolean
+        self.search = !!self.search;
 
-        if (self.data === undefined || self.data === null) {
+        // Make sure these are arrays
+        if (! Array.isArray(self.data)) {
             self.data = []
         }
-
-        if (self.columns === undefined || self.columns === null) {
+        if (! Array.isArray(self.columns)) {
             self.columns = []
         }
 
-        /**
-         * Change selected page.
-         * @param {Number} pg Specify the destination page to visit. Starts from 1.
-         */
-        self.goto = function (pg) {
-            self.page = pg
-        }
+        // Result to be processed
+        let result = self.data;
 
-        /**
-         * Change the component state of data and re-render pagination.
-         * @param {Array} data The new data to display in the datagrid.
-         */
-        self.setData = function (data) {
-            result = self.result = self.data = data
-            self.page = 0
-            page()
-
-            if (typeof self.onupdate == 'function') {
-                self.onupdate(self.result)
+        // Dispatcher
+        const Dispatch = (type, option) => {
+            if (typeof(self[type]) === 'function') {
+                self[type](self, option);
             }
         }
 
@@ -138,40 +124,21 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
             let property = typeof x === 'number' ? self.columns[x].name : x
             self.data[y][property] = value
 
-            if (typeof self.onupdate == 'function') {
-                self.onupdate(self.result, { x, y, value })
-            }
-        }
-
-        // Reload the pagination and rows of the table.
-        self.loadPages = function () {
-            page()
+            // Dispatch event
+            Dispatch('onupdate', { x, y, value });
         }
 
         self.onchange = function (prop) {
             if (prop === 'data' || prop === 'input') {
                 search(self.input)
-
-                if (typeof self.onsearch == 'function') {
-                    self.onsearch(self)
-                }
             } else if (prop === 'page') {
-                // Change the page sending the element where the property page is associated
                 page()
-
-                if (typeof self.onchangepage == 'function') {
-                    self.onchangepage(self)
-                }
             }
         }
 
         // Apply the pagination after initialization
         self.onload = function () {
-            if (self.pagination > 0) {
-                self.page = 0
-            }
-
-            self.search = !!self.search
+            self.page = 0;
         }
 
         const find = function (o, query) {
@@ -186,15 +153,22 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
 
         const search = function (str) {
             // Filter the data
-            result = self.result = self.data.filter(function (item) {
+            result = self.data.filter(function (item) {
                 return find(item, str)
             })
 
+            // Dispatch event
+            Dispatch('onsearch');
+
             // Go back to page zero
-            self.page = 0
+            self.page = 0;
         }
 
         const page = function () {
+            if (! self.pagination) {
+                self.result = result;
+            }
+
             // Pagination
             let p = parseInt(self.pagination)
             let s
@@ -275,44 +249,42 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
                 }
             }
 
-            self.pages = pages
+            self.pages = pages;
         }
 
-        const Pagination = function () {
-            // Pagination
-            let template = `<li onclick="self.parent.page = this.title;" title="{{self.title}}" selected="{{self.selected}}">{{self.value}}</li>`
-            return L.element(template, this)
-        }
-
-        let columns = ''
+        // String for the template
+        let columns = '';
 
         // Build the columns structure
-        self.columns.forEach((v) => {
-            columns += `<td :property="'${v.name}'" style="max-width: ${v.width || '100px'}; min-width: ${
-                v.width || '100px'
-            };text-align: ${v.align || 'left'}">${v.render ? v.render() : `{{self.${v.name}}}`}</td>`
+        self.columns.forEach((v, k) => {
+            columns += '<td';
+            if (v.render) {
+                columns += ` :ready="self.parent.columns[${k}].render(this, ${k}, self.parent.data.indexOf(self), ${v.name?'self.'+v.name:'null'}, self)"`;
+            }
+            if (v.name) {
+                columns += ` :property="'${v.name}'">{{self.${v.name}}}</td>`;
+            } else {
+                columns += `></td>`;
+            }
         })
 
-        let template = `<div class="datagrid-card">
-                          <div class="datagrid-search-section" search="{{self.search}}">Search:<input type='text' @bind="self.input"/></div>
-                          <table id="datagrid-table" class="datagrid-table">
-                            <thead>
-                                <tr @loop="self.columns">
-                                    <th style="max-width: ${self.width || '100px'}; min-width: ${
-            self.width || '100px'
-        }">
-                                        {{self.title}}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody @loop="self.result">
-                                <tr>${columns}</tr>
-                            </tbody>
-                          </table>
-                          <div class="datagrid-pagination-section"><ul page="{{self.page}}"><Pagination @loop="self.pages"/></ul></div>
-                        </div>`
+        // Execute that only once
+        if (typeof(window.datagridEvents) === 'undefined') {
+            document.addEventListener('click', handleClick);
+            document.addEventListener('dblclick', handleDoubleClick);
+            document.addEventListener('blur', blur, true);
+            document.addEventListener('keydown', handleKeyboard);
+            window.datagridEvents = true;
+        }
 
-        return L.element(template, self, { Pagination: Pagination })
+        return `<div class="datagrid-card">
+            <div class="datagrid-search-section" search="{{self.search}}">Search:<input type='text' :bind="self.input"/></div>
+            <table id="datagrid-table" class="datagrid-table">
+            <thead><tr :loop="self.columns"><th style="width: {{self.width||'100px'}}; text-align: {{self.align || 'left'}}">{{self.title}}</th></tr></thead>
+            <tbody :loop="self.result" data="{{self.data}}"><tr>${columns}</tr></tbody>
+            </table>
+            <div class="datagrid-pagination-section"><ul :loop="self.pages" page="{{self.page}}"><li onclick="self.parent.page = this.title;" title="{{self.title}}" selected="{{self.selected}}">{{self.value}}</li></ul></div>
+        </div>`
     }
 
     return function (root, options) {
@@ -323,4 +295,4 @@ if (!lemonade && 'function' == typeof require) var lemonade = require('lemonadej
             return Datagrid.call(this, root)
         }
     }
-})
+})));
