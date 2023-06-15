@@ -176,7 +176,8 @@ if (!lemonade && 'function' == typeof require) {
                     : Number(valueB) - Number(valueA)
             })
 
-            self.page = self.page
+            // Force refresh
+            self.page = self.page;
         }
 
         const find = function (o, query) {
