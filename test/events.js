@@ -13,7 +13,7 @@ describe('Create a Datagrid and trigger event', () => {
                 { date: '2022-02-06' },
                 { date: '2022-02-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             search: true,
             onupdate: function () {
                 stateOutside = 'after onupdate'

@@ -10,6 +10,33 @@ if (!lemonade && 'function' == typeof require) {
     let controllers = {};
     let L = lemonade;
 
+    function Path(str) {
+        str = str.split('.');
+        if (str.length) {
+            let o = this;
+            let p = null;
+            while (str.length > 1) {
+                // Get the property
+                p = str.shift();
+                // Check if the property exists
+                if (o.hasOwnProperty(p)) {
+                    o = o[p];
+                } else {
+                    // Property does not exists
+                    return undefined;
+                }
+            }
+            // Get the property
+            p = str.shift();
+                // Return the value
+                if (o) {
+                    return o[p];
+                }
+        }
+        // Something went wrong
+        return false;
+    }
+
     function handleClick(e) {
         // Handle the sorting with single click on header cells.
         if (e.target.tagName === 'TH' && e.target.lemon) {
@@ -19,19 +46,8 @@ if (!lemonade && 'function' == typeof require) {
             } else {
                 controllers.sortingAsc = false
             }
-            s.parent.setData(
-                s.parent.data.sort((a, b) => {
-                    if (!controllers.sortingAsc) {
-                        return typeof a[s.name] === 'string' && typeof b[s.name] === 'string'
-                            ? a[s.name].localeCompare(b[s.name])
-                            : Number(a[s.name]) - Number(b[s.name])
-                    }
-                    return typeof a[s.name] === 'string' && typeof b[s.name] === 'string'
-                        ? b[s.name].localeCompare(a[s.name])
-                        : Number(b[s.name]) - Number(a[s.name])
-                })
-            )
             controllers.sortingBy = s.name
+            s.parent.sort(controllers.sortingBy, controllers.sortingAsc)
         }
 
         // Handle the cell selection with single click on table body cells.
@@ -90,6 +106,11 @@ if (!lemonade && 'function' == typeof require) {
         }
     }
 
+    document.addEventListener('click', handleClick);
+    document.addEventListener('dblclick', handleDoubleClick);
+    document.addEventListener('blur', blur, true);
+    document.addEventListener('keydown', handleKeyboard);
+
     const Datagrid = function () {
         let self = this
 
@@ -141,6 +162,23 @@ if (!lemonade && 'function' == typeof require) {
             self.page = 0;
         }
 
+        self.sort = function(sortingBy, sortingAsc) {
+            self.data = self.data.sort((a, b) => {
+                let valueA = Path.call(a, sortingBy)
+                let valueB = Path.call(b, sortingBy)
+                if (!sortingAsc) {
+                    return typeof valueA === 'string' && typeof valueB === 'string'
+                        ? valueA.localeCompare(valueB)
+                        : Number(valueA) - Number(valueB)
+                }
+                return typeof valueA === 'string' && typeof valueB === 'string'
+                    ? valueB.localeCompare(valueA)
+                    : Number(valueB) - Number(valueA)
+            })
+
+            self.page = self.page
+        }
+
         const find = function (o, query) {
             for (let key in o) {
                 let value = o[key]
@@ -152,14 +190,18 @@ if (!lemonade && 'function' == typeof require) {
         }
 
         const search = function (str) {
-            // Filter the data
-            result = self.data.filter(function (item) {
-                return find(item, str)
-            })
+            if (str) {
+                // Filter the data
+                result = self.data.filter(function (item) {
+                    return find(item, str)
+                })
 
-            // Dispatch event
-            Dispatch('onsearch');
-
+                // Dispatch event
+                Dispatch('onsearch');
+            } else {
+                result = self.data
+            }
+            
             // Go back to page zero
             self.page = 0;
         }
@@ -267,15 +309,6 @@ if (!lemonade && 'function' == typeof require) {
                 columns += `></td>`;
             }
         })
-
-        // Execute that only once
-        if (typeof(window.datagridEvents) === 'undefined') {
-            document.addEventListener('click', handleClick);
-            document.addEventListener('dblclick', handleDoubleClick);
-            document.addEventListener('blur', blur, true);
-            document.addEventListener('keydown', handleKeyboard);
-            window.datagridEvents = true;
-        }
 
         return `<div class="datagrid-card">
             <div class="datagrid-search-section" search="{{self.search}}">Search:<input type='text' :bind="self.input"/></div>

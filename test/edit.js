@@ -12,8 +12,8 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
-            pagination: 2
+            columns: [{ name: 'date', title: 'Date' }],
+            pagination: 2,
         })
 
         const tbody = dg.el.children[1].children[1]
@@ -40,14 +40,14 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }]
+            columns: [{ name: 'date', title: 'Date' }]
         })
 
         const s = dg
 
         s.data.push({ date: '1999-10-10' })
         s.data.push({ date: '1999-09-20' })
-        s.loadPages()
+        s.refresh('data')
 
         expect(dg.el.innerHTML).to.include('1999-10-10')
         expect(dg.el.innerHTML).to.include('1999-09-20')
@@ -64,19 +64,19 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }]
+            columns: [{ name: 'date', title: 'Date' }]
         })
 
         const s = dg
 
         s.data.shift()
-        s.loadPages()
+        s.refresh('data')
 
         expect(dg.el.innerHTML).not.to.include('2022-01-01')
         expect(dg.el.innerHTML).to.include('2022-01-02')
 
         s.data.shift()
-        s.loadPages()
+        s.refresh('data')
 
         expect(dg.el.innerHTML).not.to.include('2022-01-02')
     })
@@ -92,7 +92,7 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }]
+            columns: [{ name: 'date', title: 'Date' }]
         })
 
         const s = dg
@@ -109,25 +109,24 @@ describe('Create a Datagrid', () => {
     })
 
     it('and set data programmatically', () => {
+        let data = [
+            { date: '2022-01-01' },
+            { date: '2022-01-02' },
+            { date: '2022-01-03' },
+            { date: '2022-01-04' },
+            { date: '2022-01-05' },
+            { date: '2022-01-06' },
+            { date: '2022-01-07' }
+        ]
+
         let dg = Datagrid(root, {
-            data: [
-                { date: '2022-01-01' },
-                { date: '2022-01-02' },
-                { date: '2022-01-03' },
-                { date: '2022-01-04' },
-                { date: '2022-01-05' },
-                { date: '2022-01-06' },
-                { date: '2022-01-07' }
-            ],
-            columns: [{ name: 'date', headerName: 'Date' }]
+            data: data,
+            columns: [{ name: 'date', title: 'Date' }]
         })
 
-        const newData = [{ date: '1550-01-01' }, { date: '1550-01-02' }]
-        const s = dg
+        data.push({ date: '1550-01-02' })
+        dg.refresh('data')
 
-        s.setData(newData)
-
-        expect(dg.el.innerHTML).not.to.include('2022-01-01')
         expect(dg.el.innerHTML).to.include('1550-01-02')
     })
 
@@ -142,7 +141,7 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             search: true
         })
 
@@ -170,7 +169,7 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             pagination: 3,
             search: true
         })
@@ -200,7 +199,7 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }]
+            columns: [{ name: 'date', title: 'Date' }]
         })
 
         const tbody = dg.el.children[1].children[1]

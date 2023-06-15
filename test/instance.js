@@ -18,10 +18,10 @@ describe('Create an instance of Datagrid', () => {
                 }
             ],
             columns: [
-                { name: 'date', headerName: 'Date' },
-                { name: 'product', headerName: 'Product' },
-                { name: 'quantity', headerName: 'Quantity' },
-                { name: 'revenue', headerName: 'Revenue' }
+                { name: 'date', title: 'Date' },
+                { name: 'product', title: 'Product' },
+                { name: 'quantity', title: 'Quantity' },
+                { name: 'revenue', title: 'Revenue' }
             ]
         })
 
@@ -56,8 +56,8 @@ describe('Create an instance of Datagrid', () => {
                 }
             ],
             columns: [
-                { name: 'date', headerName: 'Date' },
-                { name: 'product', headerName: 'Product' }
+                { name: 'date', title: 'Date' },
+                { name: 'product', title: 'Product' }
             ]
         })
 

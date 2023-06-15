@@ -56,8 +56,8 @@ Create an instance of the data grid by providing the DOM element and the **_opti
             { id: 2, person: 'Carlos', age: 33 }
         ],
         columns: [
-            { name: 'person', headerName: 'Name' },
-            { name: 'age', headerName: 'Age' }
+            { name: 'person', title: 'Name' },
+            { name: 'age', title: 'Age' }
         ]
     })
 </script>
@@ -82,8 +82,8 @@ export default function Component() {
     ]
 
     self.columns = [
-        { name: 'person', headerName: 'Name' },
-        { name: 'age', headerName: 'Age' }
+        { name: 'person', title: 'Name' },
+        { name: 'age', title: 'Age' }
     ]
 
     return `<Datagrid :data="self.data" :columns="self.columns" />`
@@ -101,8 +101,8 @@ Datagrid(root, {
         { id: 2, person: 'Carlos', age: 33 }
     ],
     columns: [
-        { name: 'person', headerName: 'Name' },
-        { name: 'age', headerName: 'Age' }
+        { name: 'person', title: 'Name' },
+        { name: 'age', title: 'Age' }
     ],
     pagination: 5, // Each page will contain this quantity of items.
     search: true

@@ -12,7 +12,7 @@ describe('Create a Datagrid with search', () => {
                 { date: '2022-02-06' },
                 { date: '2022-02-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             search: true
         })
 
@@ -48,7 +48,7 @@ describe('Create a Datagrid with search', () => {
                 { date: '2022-02-06' },
                 { date: '2022-02-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             search: true,
             pagination: 5
         })
@@ -76,7 +76,7 @@ describe('Create a Datagrid with search', () => {
                 { date: '2022-02-06' },
                 { date: '2022-02-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             search: true,
             pagination: 5
         })
@@ -108,7 +108,7 @@ describe('Create a Datagrid with search', () => {
                 { date: '2022-02-06' },
                 { date: '2022-02-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             search: true
         })
 

@@ -2,19 +2,34 @@
     <script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
     <script src="../datagrid.js"></script>
     <link rel="stylesheet" href="../style.css" />
-
-    <div id="root" style="width: 100%; height: 100%"></div>
-    <script>
-        const root = document.getElementById('root')
-        const dg = Datagrid(root, {
-            data: [
-                { id: 1, person: 'Maria', age: 28 },
-                { id: 2, person: 'Carlos', age: 33 }
-            ],
-            columns: [
-                { name: 'person', headerName: 'Name', width: '500px', align: 'right' },
-                { name: 'age', headerName: 'Age', align: 'center' }
-            ]
+ 
+<div id='root'></div>
+<script>
+    let self = null
+    function Component() {
+        self = this;
+     
+        self.data = []
+     
+        self.columns = [
+            { name: 'firstname', title: 'First Name', width: '100px', align: 'center' },
+            { name: 'lastname', title: 'Last Name', width: '100px', align: 'center' },
+            { name: 'email', title: 'Email', width: '250px', align: 'left' },
+            { name: 'phone', title: 'Phone', width: '150px', align: 'center' },
+            { name: 'address.country', title: 'Country', width: '200px', align: 'left' },
+        ]
+     
+        fetch('https://fakerapi.it/api/v1/persons?_quantity=500&_seed=1')
+        .then(response => response.clone().json())
+        .then(body => {
+            self.data = body.data
         })
+     
+        return `<div style="display: flex; justify-content: space-evenly">
+            <Datagrid data={{self.data}} columns={{self.columns}} pagination="10" search="true" :ref="datagridRef"/>
+        </div>`
+    }
+    lemonade.setComponents({ Datagrid })
+    lemonade.render(Component, document.getElementById('root'));
     </script>
 </html>

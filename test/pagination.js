@@ -12,7 +12,7 @@ describe('Create a Datagrid with pagination', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             pagination: 2
         })
 
@@ -48,41 +48,6 @@ describe('Create a Datagrid with pagination', () => {
         expect(dg.el.innerHTML).to.include('2022-01-06')
     })
 
-    it('and travel through pages via goto', () => {
-        let dg = Datagrid(root, {
-            data: [
-                { date: '2022-01-01' },
-                { date: '2022-01-02' },
-                { date: '2022-01-03' },
-                { date: '2022-01-04' },
-                { date: '2022-01-05' },
-                { date: '2022-01-06' },
-                { date: '2022-01-07' }
-            ],
-            columns: [{ name: 'date', headerName: 'Date' }],
-            pagination: 2
-        })
-
-        const li = dg.el.children[2].children[0].children
-
-        expect(li.length).to.equal(6)
-        expect(dg.el.innerHTML).to.include('2022-01-02')
-        expect(dg.el.innerHTML).not.to.include('2022-01-03')
-        expect(dg.el.innerHTML).not.to.include('2022-01-06')
-
-        dg.goto(1)
-
-        expect(dg.el.innerHTML).not.to.include('2022-01-02')
-        expect(dg.el.innerHTML).to.include('2022-01-03')
-        expect(dg.el.innerHTML).not.to.include('2022-01-06')
-
-        dg.goto(2)
-
-        expect(dg.el.innerHTML).not.to.include('2022-01-02')
-        expect(dg.el.innerHTML).not.to.include('2022-01-03')
-        expect(dg.el.innerHTML).to.include('2022-01-06')
-    })
-
     it('and <<, >> buttons dont go out of index', () => {
         let dg = Datagrid(root, {
             data: [
@@ -94,7 +59,7 @@ describe('Create a Datagrid with pagination', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             pagination: 2
         })
 
@@ -110,20 +75,6 @@ describe('Create a Datagrid with pagination', () => {
         expect(dg.el.innerHTML).to.include('2022-01-02')
         expect(dg.el.innerHTML).not.to.include('2022-01-03')
         expect(dg.el.innerHTML).not.to.include('2022-01-06')
-
-        dg.goto(3)
-
-        expect(dg.el.innerHTML).not.to.include('2022-01-02')
-        expect(dg.el.innerHTML).not.to.include('2022-01-03')
-        expect(dg.el.innerHTML).not.to.include('2022-01-06')
-        expect(dg.el.innerHTML).to.include('2022-01-07')
-
-        li[li.length - 1].click()
-
-        expect(dg.el.innerHTML).not.to.include('2022-01-02')
-        expect(dg.el.innerHTML).not.to.include('2022-01-03')
-        expect(dg.el.innerHTML).not.to.include('2022-01-06')
-        expect(dg.el.innerHTML).to.include('2022-01-07')
     })
 
     it('and dont break search', () => {
@@ -137,7 +88,7 @@ describe('Create a Datagrid with pagination', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             pagination: 2
         })
 
@@ -164,7 +115,7 @@ describe('Create a Datagrid with pagination', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             pagination: 2
         })
 
@@ -196,7 +147,7 @@ describe('Create a Datagrid with pagination', () => {
                 { date: '2022-01-06' },
                 { date: '2022-01-07' }
             ],
-            columns: [{ name: 'date', headerName: 'Date' }],
+            columns: [{ name: 'date', title: 'Date' }],
             pagination: 3
         })
 

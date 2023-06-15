@@ -22,22 +22,22 @@
             ]
 
             self.columns1 = [
-                { name: 'group', headerName: 'Group', width: '100px', align: 'center' },
+                { name: 'group', title: 'Group', width: '100px', align: 'center' },
                 {
                     name: 'actions',
-                    headerName: 'Actions',
+                    title: 'Actions',
                     width: '100px',
-                    renderCell: `<input type="button" value="Send to Grid 2" onclick="self.parent.parent.send(self, 2)" />`
+                    render: () => `<input type="button" value="Send to Grid 2" onclick="self.parent.parent.send(self, 2)" />`
                 }
             ]
 
             self.columns2 = [
-                { name: 'number', headerName: 'Number', width: '100px', align: 'center' },
+                { name: 'number', title: 'Number', width: '100px', align: 'center' },
                 {
                     name: 'actions',
-                    headerName: 'Actions',
+                    title: 'Actions',
                     width: '100px',
-                    renderCell: `<input type="button" value="Send to Grid 1" onclick="self.parent.parent.send(self, 1)" />`
+                    render: () => `<input type="button" value="Send to Grid 1" onclick="self.parent.parent.send(self, 1)" />`
                 }
             ]
 

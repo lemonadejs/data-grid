@@ -12,8 +12,8 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Arthur', grade: 10 }
             ],
             columns: [
-                { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' }
+                { name: 'name', title: 'Name' },
+                { name: 'grade', title: 'Grade' }
             ],
             search: true
         })
@@ -57,8 +57,8 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Arthur', grade: 10 }
             ],
             columns: [
-                { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' }
+                { name: 'name', title: 'Name' },
+                { name: 'grade', title: 'Grade' }
             ],
             search: true,
             pagination: 3
@@ -93,8 +93,8 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Arthur', grade: 10 }
             ],
             columns: [
-                { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' }
+                { name: 'name', title: 'Name' },
+                { name: 'grade', title: 'Grade' }
             ],
             search: true,
             pagination: 3
@@ -127,8 +127,8 @@ describe('Create a Datagrid with search', () => {
                 { name: 'Arthur', grade: 10 }
             ],
             columns: [
-                { name: 'name', headerName: 'Name' },
-                { name: 'grade', headerName: 'Grade' }
+                { name: 'name', title: 'Name' },
+                { name: 'grade', title: 'Grade' }
             ],
             search: true,
             pagination: 3
