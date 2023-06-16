@@ -1,7 +1,7 @@
 const { expect } = require('chai')
 
-describe('Create a Datagrid with search', () => {
-    it('and search successfully', () => {
+describe('Create a Datagrid', () => {
+    it('and sort successfully', () => {
         let dg = Datagrid(root, {
             data: [
                 { name: 'Baudur', grade: 8 },

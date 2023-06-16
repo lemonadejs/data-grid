@@ -163,21 +163,32 @@ if (!lemonade && 'function' == typeof require) {
         }
 
         self.sort = function(sortingBy, sortingAsc) {
-            self.data = self.data.sort((a, b) => {
-                let valueA = Path.call(a, sortingBy)
-                let valueB = Path.call(b, sortingBy)
-                if (!sortingAsc) {
-                    return typeof valueA === 'string' && typeof valueB === 'string'
-                        ? valueA.localeCompare(valueB)
-                        : Number(valueA) - Number(valueB)
-                }
-                return typeof valueA === 'string' && typeof valueB === 'string'
-                    ? valueB.localeCompare(valueA)
-                    : Number(valueB) - Number(valueA)
-            })
+            if (sortingBy) {
+                self.data = self.data.sort((a, b) => {
+                    const valueA = Path.call(a, sortingBy)
+                    const valueB = Path.call(b, sortingBy)
+                    
+                    const isANumber = !isNaN(parseFloat(valueA)) && isFinite(valueA);
+                    const isBNumber = !isNaN(parseFloat(valueB)) && isFinite(valueB);
 
-            // Force refresh
-            self.page = self.page;
+                    if (isANumber && isBNumber && !sortingAsc) {
+                        return parseFloat(valueA) - parseFloat(valueB)
+                    } else if (isANumber && isBNumber) {
+                        return parseFloat(valueB) - parseFloat(valueA)
+                    } else if (isANumber) {
+                        return -1
+                    } else if (isBNumber) {
+                        return 1
+                    } else if (sortingAsc) {
+                        return valueB.localeCompare(valueA)
+                    } else {
+                        return valueA.localeCompare(valueB)
+                    }
+                })
+    
+                // Force refresh
+                self.page = self.page;
+            }
         }
 
         const find = function (o, query) {
