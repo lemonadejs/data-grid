@@ -303,6 +303,9 @@ if (!lemonade && 'function' == typeof require) {
             if (v.render) {
                 columns += ` :ready="self.parent.columns[${k}].render(this, ${k}, self.parent.data.indexOf(self), ${v.name?'self.'+v.name:'null'}, self)"`;
             }
+            if (v.align) {
+                columns += ` style="text-align: ${v.align}"`
+            }
             if (v.name) {
                 columns += ` :property="'${v.name}'">{{self.${v.name}}}</td>`;
             } else {
