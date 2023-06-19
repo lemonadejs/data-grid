@@ -3,51 +3,75 @@ if (!lemonade && 'function' == typeof require) {
 }
 
 ;(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-    global.Datagrid = factory();
-}(this, (function () {
-    let controllers = {};
-    let L = lemonade;
+    typeof exports === 'object' && typeof module !== 'undefined'
+        ? (module.exports = factory())
+        : typeof define === 'function' && define.amd
+        ? define(factory)
+        : (global.Datagrid = factory())
+})(this, function () {
+    let controllers = { onEdition: [] }
+    let L = lemonade
 
     function Path(str) {
-        str = str.split('.');
+        str = str.split('.')
         if (str.length) {
-            let o = this;
-            let p = null;
+            let o = this
+            let p = null
             while (str.length > 1) {
                 // Get the property
-                p = str.shift();
+                p = str.shift()
                 // Check if the property exists
                 if (o.hasOwnProperty(p)) {
-                    o = o[p];
+                    o = o[p]
                 } else {
                     // Property does not exists
-                    return undefined;
+                    return undefined
                 }
             }
             // Get the property
-            p = str.shift();
-                // Return the value
-                if (o) {
-                    return o[p];
-                }
+            p = str.shift()
+            // Return the value
+            if (o) {
+                return o[p]
+            }
         }
         // Something went wrong
-        return false;
+        return false
+    }
+
+    function editCell(target) {
+        let lemon = target.parentNode.lemon
+        // Handle the cell edition mode with double click on table body cells.
+        if (lemon && lemon.self.parent.editable === 'true') {
+            controllers.onEdition = [target, target.parentNode.lemon.self, target.property]
+            target.setAttribute('contentEditable', true)
+            target.classList.add('edit-mode')
+            target.focus()
+        }
     }
 
     function handleClick(e) {
         // Handle the sorting with single click on header cells.
         if (e.target.tagName === 'TH' && e.target.lemon) {
-            let s = e.target.lemon.self;
-            if (s.name === controllers.sortingBy) {
+            let s = e.target.lemon.self
+            if (controllers.sortingBy && s.name === controllers.sortingBy.name) {
+                if (!controllers.sortingAsc) {
+                    s.el.classList.add('sort-descending')
+                    s.el.classList.remove('sort-arrow')
+                } else {
+                    s.el.classList.remove('sort-descending')
+                    s.el.classList.add('sort-arrow')
+                }
                 controllers.sortingAsc = !controllers.sortingAsc
             } else {
+                s.el.classList.add('sort-arrow')
                 controllers.sortingAsc = false
+                if (controllers.sortingBy) {
+                    controllers.sortingBy.el.classList.remove('sort-arrow', 'sort-descending')
+                }
             }
-            controllers.sortingBy = s.name
-            s.parent.sort(controllers.sortingBy, controllers.sortingAsc)
+            controllers.sortingBy = s
+            s.parent.sort(controllers.sortingBy.name, controllers.sortingAsc)
         }
 
         // Handle the cell selection with single click on table body cells.
@@ -66,13 +90,8 @@ if (!lemonade && 'function' == typeof require) {
     }
 
     function handleDoubleClick(e) {
-        let lemon = e.target.parentNode.lemon;
-        // Handle the cell edition mode with double click on table body cells.
-        if (e.target.tagName === 'TD' && lemon && lemon.self.parent.editable === true) {
-            controllers.onEdition = [e.target, e.target.parentNode.lemon.self, e.target.property]
-            e.target.setAttribute('contentEditable', true)
-            e.target.classList.add('edit-mode')
-            e.target.focus()
+        if (e.target.tagName === 'TD') {
+            editCell(e.target)
         }
     }
 
@@ -94,7 +113,7 @@ if (!lemonade && 'function' == typeof require) {
                 ),
                 e.target.innerText
             )
-            controllers.onEdition = [];
+            controllers.onEdition = []
         }
     }
 
@@ -104,34 +123,38 @@ if (!lemonade && 'function' == typeof require) {
                 controllers.onEdition[0].blur()
             }
         }
+
+        if (!controllers.onEdition[0] && controllers.selectedCell) {
+            editCell(controllers.selectedCell)
+        }
     }
 
-    document.addEventListener('click', handleClick);
-    document.addEventListener('dblclick', handleDoubleClick);
-    document.addEventListener('blur', blur, true);
-    document.addEventListener('keydown', handleKeyboard);
+    document.addEventListener('click', handleClick)
+    document.addEventListener('dblclick', handleDoubleClick)
+    document.addEventListener('blur', blur, true)
+    document.addEventListener('keydown', handleKeyboard)
 
     const Datagrid = function () {
         let self = this
 
         // Make sure this is boolean
-        self.search = !!self.search;
+        self.search = !!self.search
 
         // Make sure these are arrays
-        if (! Array.isArray(self.data)) {
+        if (!Array.isArray(self.data)) {
             self.data = []
         }
-        if (! Array.isArray(self.columns)) {
+        if (!Array.isArray(self.columns)) {
             self.columns = []
         }
 
         // Result to be processed
-        let result = self.data;
+        let result = self.data
 
         // Dispatcher
         const Dispatch = (type, option) => {
-            if (typeof(self[type]) === 'function') {
-                self[type](self, option);
+            if (typeof self[type] === 'function') {
+                self[type](self, option)
             }
         }
 
@@ -146,7 +169,7 @@ if (!lemonade && 'function' == typeof require) {
             self.data[y][property] = value
 
             // Dispatch event
-            Dispatch('onupdate', { x, y, value });
+            Dispatch('onupdate', { x, y, value })
         }
 
         self.onchange = function (prop) {
@@ -159,22 +182,22 @@ if (!lemonade && 'function' == typeof require) {
 
         // Apply the pagination after initialization
         self.onload = function () {
-            self.page = 0;
+            self.page = 0
         }
 
-        self.sort = function(sortingBy, sortingAsc) {
-            if (sortingBy) {
+        self.sort = function (sortingTitle, sortingAsc) {
+            if (sortingTitle) {
                 self.data = self.data.sort((a, b) => {
-                    const valueA = Path.call(a, sortingBy)
-                    const valueB = Path.call(b, sortingBy)
-                    
-                    const isANumber = !isNaN(parseFloat(valueA)) && isFinite(valueA);
-                    const isBNumber = !isNaN(parseFloat(valueB)) && isFinite(valueB);
+                    const valueA = Path.call(a, sortingTitle)
+                    const valueB = Path.call(b, sortingTitle)
+
+                    const isANumber = !isNaN(parseFloat(valueA)) && isFinite(valueA)
+                    const isBNumber = !isNaN(parseFloat(valueB)) && isFinite(valueB)
 
                     if (isANumber && isBNumber && !sortingAsc) {
-                        return parseFloat(valueA) - parseFloat(valueB)
-                    } else if (isANumber && isBNumber) {
                         return parseFloat(valueB) - parseFloat(valueA)
+                    } else if (isANumber && isBNumber) {
+                        return parseFloat(valueA) - parseFloat(valueB)
                     } else if (isANumber) {
                         return -1
                     } else if (isBNumber) {
@@ -185,9 +208,9 @@ if (!lemonade && 'function' == typeof require) {
                         return valueA.localeCompare(valueB)
                     }
                 })
-    
+
                 // Force refresh
-                self.page = self.page;
+                self.page = self.page
             }
         }
 
@@ -209,18 +232,18 @@ if (!lemonade && 'function' == typeof require) {
                 })
 
                 // Dispatch event
-                Dispatch('onsearch');
+                Dispatch('onsearch')
             } else {
                 result = self.data
             }
 
             // Go back to page zero
-            self.page = 0;
+            self.page = 0
         }
 
         const page = function () {
-            if (! self.pagination) {
-                self.result = result;
+            if (!self.pagination) {
+                self.result = result
             }
 
             // Pagination
@@ -303,25 +326,27 @@ if (!lemonade && 'function' == typeof require) {
                 }
             }
 
-            self.pages = pages;
+            self.pages = pages
         }
 
         // String for the template
-        let columns = '';
+        let columns = ''
 
         // Build the columns structure
         self.columns.forEach((v, k) => {
-            columns += '<td';
+            columns += '<td'
             if (v.render) {
-                columns += ` :ready="self.parent.columns[${k}].render(this, ${k}, self.parent.data.indexOf(self), ${v.name?'self.'+v.name:'null'}, self)"`;
+                columns += ` :ready="self.parent.columns[${k}].render(this, ${k}, self.parent.data.indexOf(self), ${
+                    v.name ? 'self.' + v.name : 'null'
+                }, self)"`
             }
             if (v.align) {
                 columns += ` style="text-align: ${v.align}"`
             }
             if (v.name) {
-                columns += ` :property="'${v.name}'">{{self.${v.name}}}</td>`;
+                columns += ` :property="'${v.name}'">{{self.${v.name}}}</td>`
             } else {
-                columns += `></td>`;
+                columns += `></td>`
             }
         })
 
@@ -343,4 +368,4 @@ if (!lemonade && 'function' == typeof require) {
             return Datagrid.call(this, root)
         }
     }
-})));
+})

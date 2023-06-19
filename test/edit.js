@@ -13,7 +13,7 @@ describe('Create a Datagrid', () => {
                 { date: '2022-01-07' }
             ],
             columns: [{ name: 'date', title: 'Date' }],
-            pagination: 2,
+            pagination: 2
         })
 
         const tbody = dg.el.children[1].children[1]

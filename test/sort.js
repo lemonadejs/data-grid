@@ -35,14 +35,14 @@ describe('Create a Datagrid', () => {
 
         headers[1].click()
 
-        expect(tbody.children[0].children[1].innerHTML).to.equal('6')
-        expect(tbody.children[1].children[1].innerHTML).to.equal('7')
+        expect(tbody.children[0].children[1].innerHTML).to.equal('10')
+        expect(tbody.children[1].children[1].innerHTML).to.equal('9.5')
         expect(tbody.children[2].children[1].innerHTML).to.equal('8')
 
         headers[1].click()
 
-        expect(tbody.children[0].children[1].innerHTML).to.equal('10')
-        expect(tbody.children[1].children[1].innerHTML).to.equal('9.5')
+        expect(tbody.children[0].children[1].innerHTML).to.equal('6')
+        expect(tbody.children[1].children[1].innerHTML).to.equal('7')
         expect(tbody.children[2].children[1].innerHTML).to.equal('8')
     })
 
@@ -151,8 +151,8 @@ describe('Create a Datagrid', () => {
 
         expect(cell1.innerHTML).to.include('Alice Cooper')
         headers[1].click()
-        expect(tbody.children[0].children[0].innerHTML).to.include('Carlos')
-        headers[1].click()
         expect(tbody.children[0].children[0].innerHTML).to.include('Arthur')
+        headers[1].click()
+        expect(tbody.children[0].children[0].innerHTML).to.include('Carlos')
     })
 })

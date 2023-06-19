@@ -1,4 +1,5 @@
 # Javascript Data Grid
+
 [Official website and documentation is here](https://lemonadejs.net/components/data-grid)
 
 You can utilize this component with Vanilla JavaScript, LemonadeJS, or React.
@@ -7,8 +8,8 @@ Lemonade data grid is a lightweight JavaScript library that allows you to effort
 
 ## Author
 
-- Name: Nicolas Jessé
-- GitHub: [nicolasjesse](https://github.com/nicolasjesse)
+-   Name: Nicolas Jessé
+-   GitHub: [nicolasjesse](https://github.com/nicolasjesse)
 
 ## Features
 
@@ -166,5 +167,5 @@ DataGridLM is released under the MIT.
 
 ## Other Tools
 
-- [jSuites](https://jsuites.net/v4/)
-- [Jspreadsheet](https://jspreadsheet.com)
+-   [jSuites](https://jsuites.net/v4/)
+-   [Jspreadsheet](https://jspreadsheet.com)

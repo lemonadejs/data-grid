@@ -54,6 +54,10 @@
 
 .datagrid-table {
     border-collapse: collapse;
+    table-layout: fixed;
+    white-space: nowrap;
+    empty-cells: show;
+    width: 0;
 }
 
 .datagrid-table .datagrid-selected {
@@ -75,9 +79,13 @@
     border: solid 1px transparent;
 }
 
-.datagrid-table thead th {
+.datagrid-table th {
     border-bottom-color: #757575;
     user-select: none;
+}
+
+.datagrid-table thead tr {
+    height: 37px;
 }
 
 .datagrid-table tbody td {
@@ -89,10 +97,19 @@
     text-overflow: clip;
 }
 
-.edit-mode {
+.datagrid-table .edit-mode {
     text-overflow: inherit !important;
+    outline: solid 1px #000000;
 }
 
 table:hover {
     cursor: pointer;
+}
+
+.datagrid-table .sort-arrow::after {
+    content: '\2191';
+}
+
+.datagrid-table .sort-descending::after {
+    content: '\2193';
 }
