@@ -1,8 +1,8 @@
-const { expect } = require('chai')
+const { expect } = require('chai');
 
 describe('Create a Datagrid and trigger event', () => {
     it('onupdate', () => {
-        let stateOutside = 'before onupdate'
+        let stateOutside = 'before onupdate';
         let dg = Datagrid(root, {
             data: [
                 { date: '2022-01-01' },
@@ -16,11 +16,11 @@ describe('Create a Datagrid and trigger event', () => {
             columns: [{ name: 'date', title: 'Date' }],
             search: true,
             onupdate: function () {
-                stateOutside = 'after onupdate'
+                stateOutside = 'after onupdate';
             }
-        })
+        });
 
-        dg.setValue(0, 0, 'Something')
-        expect(stateOutside).to.equal('after onupdate')
-    })
-})
+        dg.setValue(0, 0, 'Something');
+        expect(stateOutside).to.equal('after onupdate');
+    });
+});

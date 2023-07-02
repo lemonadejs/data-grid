@@ -1,6 +1,6 @@
-import Datagrid from './datagrid'
-import './style.css'
+import Datagrid from './datagrid';
+import './style.css';
 
-window.Datagrid = Datagrid
+window.Datagrid = Datagrid;
 
-export default Datagrid
+export default Datagrid;

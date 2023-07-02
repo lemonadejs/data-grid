@@ -5,11 +5,11 @@
 
     <div id="root"></div>
     <script>
-        let self = null
+        let self = null;
         function Component() {
-            self = this
+            self = this;
 
-            self.data = []
+            self.data = [];
 
             self.columns = [
                 { name: 'firstname', title: 'First Name', width: '100px', align: 'center' },
@@ -17,19 +17,19 @@
                 { name: 'email', title: 'Email', width: '250px', align: 'left' },
                 { name: 'phone', title: 'Phone', width: '150px', align: 'center' },
                 { name: 'address.country', title: 'Country', width: '200px', align: 'left' }
-            ]
+            ];
 
             fetch('https://fakerapi.it/api/v1/persons?_quantity=500&_seed=1')
                 .then((response) => response.clone().json())
                 .then((body) => {
-                    self.data = body.data
-                })
+                    self.data = body.data;
+                });
 
             return `<div style="display: flex; justify-content: space-evenly">
             <Datagrid data={{self.data}} columns={{self.columns}} pagination="10" search="true" :ref="datagridRef" editable="true"/>
-        </div>`
+        </div>`;
         }
-        lemonade.setComponents({ Datagrid })
-        lemonade.render(Component, document.getElementById('root'))
+        lemonade.setComponents({ Datagrid });
+        lemonade.render(Component, document.getElementById('root'));
     </script>
 </html>

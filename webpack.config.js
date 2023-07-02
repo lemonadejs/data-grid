@@ -1,5 +1,5 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
 
 module.exports = (env, argv) => {
     const prod_config = {
@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
             ]
         },
         stats: { warnings: false }
-    }
+    };
 
     const dev_config = {
         target: 'web',
@@ -71,15 +71,15 @@ module.exports = (env, argv) => {
             hot: 'only'
         },
         stats: { warnings: false }
-    }
+    };
 
     if (argv.mode === 'production') {
         prod_config.plugins.push(
             new MiniCssExtractPlugin({
                 filename: 'style.css'
             })
-        )
+        );
     }
 
-    return argv.mode === 'production' ? prod_config : dev_config
-}
+    return argv.mode === 'production' ? prod_config : dev_config;
+};

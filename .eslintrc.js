@@ -18,4 +18,4 @@ module.exports = {
         'no-control-regex': 'off',
         'no-empty': 'off'
     }
-}
+};

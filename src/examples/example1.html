@@ -6,7 +6,7 @@
     <div id="root"></div>
     <script>
         function Component() {
-            const self = this
+            const self = this;
 
             self.data = [
                 {
@@ -33,21 +33,21 @@
                     price: 39.99,
                     description: 'This is a durable and spacious backpack with multiple compartments.'
                 }
-            ]
+            ];
 
             self.columns = [
                 { name: 'name', title: 'Product', width: '200px', align: 'left' },
                 { name: 'price', title: 'Price', width: '100px', align: 'center' },
                 { name: 'description', title: 'Description', width: '300px', align: 'left' }
-            ]
+            ];
 
             return `<>
             <Datagrid data={{self.data}} columns={{self.columns}} search="true" pagination="2" />
-        </>`
+        </>`;
         }
 
-        lemonade.setComponents({ Datagrid })
+        lemonade.setComponents({ Datagrid });
 
-        lemonade.render(Component, document.getElementById('root'))
+        lemonade.render(Component, document.getElementById('root'));
     </script>
 </html>

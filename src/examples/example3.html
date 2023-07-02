@@ -6,7 +6,7 @@
     <div id="root"></div>
     <script>
         function Component() {
-            const self = this
+            const self = this;
             self.data = [
                 { name: 'Baudur', grade: 8 },
                 { name: 'Alice', grade: 10 },
@@ -14,17 +14,17 @@
                 { name: 'Carlos', grade: 6 },
                 { name: 'Danny', grade: 7 },
                 { name: 'Celine', grade: 8 }
-            ]
+            ];
             self.columns = [
                 { name: 'name', title: 'Name' },
                 { name: 'grade', title: 'Grade' }
-            ]
+            ];
 
             return `<div style="display: flex; justify-content: space-evenly;">
                     <Datagrid :data="self.data" :columns="self.columns"/>
-            </div>`
+            </div>`;
         }
-        lemonade.setComponents({ Datagrid })
-        lemonade.render(Component, document.getElementById('root'))
+        lemonade.setComponents({ Datagrid });
+        lemonade.render(Component, document.getElementById('root'));
     </script>
 </html>

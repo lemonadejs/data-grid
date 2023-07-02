@@ -1,58 +1,58 @@
-.datagrid-card {
+.lm-data-grid-card {
     display: inline-block;
     border-radius: 5px;
     background-color: white;
     font-family: sans-serif;
 }
 
-.datagrid-search-section {
+.lm-data-grid-search-section {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.datagrid-search-section[search='false'] {
+.lm-data-grid-search-section[search='false'] {
     display: none;
 }
 
-.datagrid-search-section input {
+.lm-data-grid-search-section input {
     height: 28px;
     margin-left: 5px;
     padding: 5px;
 }
 
-.datagrid-pagination-section {
+.lm-data-grid-pagination-section {
     display: flex;
     justify-content: flex-end;
     user-select: none;
 }
 
-.datagrid-pagination-section ul {
+.lm-data-grid-pagination-section ul {
     display: flex;
     list-style-type: none;
     padding-left: 0;
     margin-left: 0;
 }
 
-.datagrid-pagination-section ul li {
+.lm-data-grid-pagination-section ul li {
     margin-left: 2px;
     padding: 0.3em 0.8em;
     border: 1px solid transparent;
     cursor: pointer;
 }
 
-.datagrid-pagination-section ul li[selected='false']:hover {
+.lm-data-grid-pagination-section ul li[selected='false']:hover {
     color: #fff;
     border: 1px solid #111;
     background: linear-gradient(to bottom, #111122 0%, #000 100%);
 }
 
-.datagrid-pagination-section ul li[selected='true'] {
+.lm-data-grid-pagination-section ul li[selected='true'] {
     border: 1px solid rgba(0, 0, 0, 0.3);
     background: linear-gradient(to bottom, rgba(100, 100, 100, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
 }
 
-.datagrid-table {
+.lm-data-grid-table {
     border-collapse: collapse;
     table-layout: fixed;
     white-space: nowrap;
@@ -60,35 +60,35 @@
     width: 0;
 }
 
-.datagrid-table .datagrid-selected {
+.lm-data-grid-table .lm-data-grid-selected {
     outline: solid 1px #00000011;
 }
 
-.datagrid-table tbody tr:nth-child(even) {
+.lm-data-grid-table tbody tr:nth-child(even) {
     box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.01);
 }
 
-.datagrid-table tbody tr:nth-child(odd) {
+.lm-data-grid-table tbody tr:nth-child(odd) {
     box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.03);
 }
 
-.datagrid-table td,
-.datagrid-table th {
+.lm-data-grid-table td,
+.lm-data-grid-table th {
     padding: 9px 10px;
     margin: 0;
     border: solid 1px transparent;
 }
 
-.datagrid-table th {
+.lm-data-grid-table th {
     border-bottom-color: #757575;
     user-select: none;
 }
 
-.datagrid-table thead tr {
+.lm-data-grid-table thead tr {
     height: 37px;
 }
 
-.datagrid-table tbody td {
+.lm-data-grid-table tbody td {
     font-size: 14px;
     height: 1px;
     box-sizing: border-box;
@@ -97,7 +97,7 @@
     text-overflow: clip;
 }
 
-.datagrid-table .edit-mode {
+.lm-data-grid-table .edit-mode {
     text-overflow: inherit !important;
     outline: solid 1px #000000;
 }
@@ -106,10 +106,10 @@ table:hover {
     cursor: pointer;
 }
 
-.datagrid-table .sort-arrow::after {
+.lm-data-grid-table .sort-arrow::after {
     content: '\2191';
 }
 
-.datagrid-table .sort-descending::after {
+.lm-data-grid-table .sort-descending::after {
     content: '\2193';
 }
